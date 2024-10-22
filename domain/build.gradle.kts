@@ -34,6 +34,9 @@ android {
 }
 
 dependencies {
+
+    implementation(project(":utils"))
+
     /**
      * api -> data модуль видит domain модуль. все dependency подключенные через api будут видны и в data модуле.
      * т.е. доступ к koin-core будет и у data модуля. Можно специально в build.gradle:data не подключать эту зависимость

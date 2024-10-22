@@ -14,7 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.market_app.ui.screens.HomeRoute
-import com.example.market_app.ui.screens.LocalNavController
+import com.example.market_app.ui.composition.LocalNavController
 import com.example.market_app.ui.screens.home.HomeScreen
 import com.example.market_app.ui.theme.MarketappTheme
 
@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun NavApp() {
+private fun NavApp() {
     val navController = rememberNavController()
 
     CompositionLocalProvider(
@@ -69,8 +69,6 @@ fun NavApp() {
             composable<HomeRoute> {
                 HomeScreen()
             }
-
-
         }
     }
 }

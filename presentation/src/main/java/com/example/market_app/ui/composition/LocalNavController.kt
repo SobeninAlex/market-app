@@ -1,4 +1,4 @@
-package com.example.market_app.ui.screens
+package com.example.market_app.ui.composition
 
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.navigation.NavController

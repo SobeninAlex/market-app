@@ -17,7 +17,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.domain.entity.Product
 import com.example.market_app.ui.component.ClickableRoundedColumn
-import com.example.market_app.ui.screens.LocalNavController
+import com.example.market_app.ui.component.LoadingScreenContent
+import com.example.market_app.ui.component.ProductItem
+import com.example.market_app.ui.composition.LocalNavController
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -50,17 +52,6 @@ fun HomeScreen() {
 }
 
 @Composable
-fun LoadingScreenContent() {
-    Box(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        CircularProgressIndicator(
-            modifier = Modifier.align(Alignment.Center)
-        )
-    }
-}
-
-@Composable
 private fun HomeScreenContent(
     products: List<Product>
 ) {
@@ -72,19 +63,6 @@ private fun HomeScreenContent(
         items(products) { product ->
             ProductItem(product)
         }
-    }
-}
-
-@Composable
-private fun ProductItem(
-    product: Product
-) {
-    ClickableRoundedColumn(
-        onClick = {}
-    ) {
-        Text(
-            text = product.toString()
-        )
     }
 }
 

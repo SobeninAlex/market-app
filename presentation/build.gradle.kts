@@ -43,6 +43,7 @@ android {
 dependencies {
     implementation(project(":data"))
     implementation(project(":domain"))
+    implementation(project(":utils"))
 
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)

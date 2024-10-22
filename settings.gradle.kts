@@ -23,3 +23,4 @@ rootProject.name = "market-app"
 include(":presentation")
 include(":data")
 include(":domain")
+include(":utils")
