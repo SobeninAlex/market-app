@@ -18,9 +18,12 @@ class NetworkServiceImpl(
     val client: HttpClient
 ) : NetworkService {
 
-    override suspend fun getProducts(): ResultWrapper<List<Product>> {
+    private val baseUrl = "https://fakestoreapi.com"
+
+    override suspend fun getProducts(category: String?): ResultWrapper<List<Product>> {
+        val url = if (category != null) "$baseUrl/products/category/$category" else "$baseUrl/products"
         return makeWebRequest(
-            url = "https://fakestoreapi.com/products",
+            url = url,
             method = HttpMethod.Get,
             mapper = { products: List<ProductDto> ->
                 products.map { it.toProduct() }
