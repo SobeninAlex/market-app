@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 fun RoundedColumn(
     modifier: Modifier = Modifier,
     backgroundColor: Color = Color.White,
-    shape: Shape = RoundedCornerShape(size = 12.dp),
+    shape: Shape = RoundedCornerShape(size = 16.dp),
     contentPadding: PaddingValues = PaddingValues(horizontal = 0.dp, vertical = 16.dp),
     verticalArrangement: Arrangement.Vertical = Arrangement.Top,
     horizontalAlignment: Alignment.Horizontal = Alignment.Start,
@@ -46,7 +46,7 @@ fun ClickableRoundedColumn(
     modifier: Modifier = Modifier,
     isClickEnabled: Boolean = true,
     backgroundColor: Color = Color.White,
-    shape: Shape = RoundedCornerShape(size = 12.dp),
+    shape: Shape = RoundedCornerShape(size = 16.dp),
     contentPadding: PaddingValues = PaddingValues(horizontal = 0.dp, vertical = 16.dp),
     content: @Composable ColumnScope.() -> Unit
 ) {

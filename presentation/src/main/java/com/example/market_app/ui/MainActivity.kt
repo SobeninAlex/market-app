@@ -8,6 +8,7 @@ import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -38,7 +39,7 @@ private fun NavApp() {
     val navController = rememberNavController()
 
     Scaffold(
-        modifier = Modifier.padding(16.dp)
+        containerColor = MaterialTheme.colorScheme.background
     ) { paddingValues ->
         CompositionLocalProvider(
             LocalNavController provides navController
