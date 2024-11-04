@@ -1,4 +1,4 @@
-package com.example.market_app.ui.composition
+package com.example.utils
 
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.navigation.NavController

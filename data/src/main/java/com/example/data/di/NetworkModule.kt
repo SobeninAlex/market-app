@@ -28,6 +28,8 @@ val networkModule = module {
     }
 
     single<NetworkService> {
-        NetworkServiceImpl(get())
+        NetworkServiceImpl(
+            client = get()
+        )
     }
 }

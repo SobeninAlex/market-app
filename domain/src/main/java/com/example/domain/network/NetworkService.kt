@@ -5,6 +5,7 @@ import com.example.domain.entity.Product
 interface NetworkService {
 
     suspend fun getProducts(category: String?): ResultWrapper<List<Product>>
+    suspend fun getCategories(): ResultWrapper<List<String>>
 
 }
 

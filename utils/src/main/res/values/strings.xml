@@ -3,4 +3,7 @@
     <string name="view_all">View ALL</string>
     <string name="title_featured">Featured</string>
     <string name="title_popular">Most Popular</string>
+    <string name="title_tab_home">Home</string>
+    <string name="title_tab_basket">Favourites</string>
+    <string name="title_tab_profile">Profile</string>
 </resources>

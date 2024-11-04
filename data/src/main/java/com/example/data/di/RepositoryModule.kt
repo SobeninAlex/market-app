@@ -1,8 +1,10 @@
 package com.example.data.di
 
 import com.example.data.network.NetworkServiceImpl
+import com.example.data.repository.CategoryRepositoryImpl
 import com.example.data.repository.ProductRepositoryImpl
 import com.example.domain.network.NetworkService
+import com.example.domain.repository.CategoryRepository
 import com.example.domain.repository.ProductRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
@@ -15,6 +17,14 @@ import org.koin.dsl.module
 
 val repositoryModule = module {
     single<ProductRepository> {
-        ProductRepositoryImpl(get())
+        ProductRepositoryImpl(
+            networkService = get()
+        )
+    }
+
+    single<CategoryRepository> {
+        CategoryRepositoryImpl(
+            networkService = get()
+        )
     }
 }
