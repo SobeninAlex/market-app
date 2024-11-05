@@ -18,6 +18,8 @@ kotlinxSerialization = "1.7.1"
 coilComposeVersion = "2.6.0"
 kotlinxImmutableCollections = "0.3.7"
 
+#---------------------------------------------------------------------------------------------------
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -53,6 +55,8 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinxImmutableCollections" }
 
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coilComposeVersion" }
+
+#---------------------------------------------------------------------------------------------------
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

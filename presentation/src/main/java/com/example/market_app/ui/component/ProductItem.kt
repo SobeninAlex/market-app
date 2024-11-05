@@ -18,7 +18,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.domain.entity.Product
-import com.example.market_app.ui.theme.LightGray
 
 @Composable
 fun ProductItem(
@@ -26,7 +25,6 @@ fun ProductItem(
 ) {
     ClickableRoundedColumn(
         modifier = Modifier.size(width = 126.dp, height = 144.dp),
-        backgroundColor = LightGray,
         contentPadding = PaddingValues(all = 0.dp),
         onClick = { /*TODO*/ }
     ) {

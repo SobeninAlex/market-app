@@ -1,4 +1,4 @@
-package com.example.market_app.ui.theme
+package com.example.utils.resources
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

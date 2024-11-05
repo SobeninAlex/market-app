@@ -4,13 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -33,7 +29,6 @@ import com.example.market_app.navigation.ProfileGraph.ProfileRoute
 import com.example.market_app.ui.screens.basket.BasketScreen
 import com.example.market_app.ui.screens.home.HomeScreen
 import com.example.market_app.ui.screens.profile.ProfileScreen
-import com.example.market_app.ui.theme.MarketappTheme
 import com.example.utils.LocalNavController
 
 class MainActivity : ComponentActivity() {

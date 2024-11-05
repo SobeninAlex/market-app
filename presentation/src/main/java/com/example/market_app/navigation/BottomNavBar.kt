@@ -16,7 +16,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.market_app.ui.theme.PurpleGrey40
 import com.example.utils.routeClass
 import kotlinx.collections.immutable.ImmutableList
 
@@ -27,7 +26,7 @@ fun BottomNavBar(
 ) {
     NavigationBar(
         modifier = Modifier.height(100.dp),
-        containerColor = PurpleGrey40,
+        containerColor = MaterialTheme.colorScheme.primaryContainer,
         tonalElevation = 1.dp
     ) {
         val currentBackStackEntry by navController.currentBackStackEntryAsState()

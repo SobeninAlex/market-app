@@ -24,7 +24,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.example.market_app.ui.theme.LightGray
 import com.example.utils.R
 
 @Composable
@@ -59,7 +58,7 @@ fun ProfileHeader() {
 
         IconButton(
             colors = IconButtonDefaults.iconButtonColors(
-                containerColor = LightGray
+                containerColor = MaterialTheme.colorScheme.primaryContainer
             ),
             modifier = Modifier.size(48.dp).clip(CircleShape),
             onClick = {}

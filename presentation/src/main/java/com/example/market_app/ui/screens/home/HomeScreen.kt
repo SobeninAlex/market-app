@@ -2,11 +2,7 @@ package com.example.market_app.ui.screens.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -18,9 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -32,11 +28,14 @@ import com.example.market_app.ui.component.ProfileHeader
 import com.example.market_app.ui.component.SearchBar
 import com.example.utils.LocalNavController
 import com.example.utils.R
+import com.example.utils.setupSystemBarStyleDefault
 import org.koin.androidx.compose.koinViewModel
-import org.koin.dsl.module
 
 @Composable
 fun HomeScreen() {
+    val context = LocalContext.current
+    context.setupSystemBarStyleDefault()
+
     val navController = LocalNavController.current
     val viewModel = koinViewModel<HomeViewModel>()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
