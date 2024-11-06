@@ -29,6 +29,7 @@ import com.example.market_app.navigation.ProfileGraph.ProfileRoute
 import com.example.market_app.ui.screens.basket.BasketScreen
 import com.example.market_app.ui.screens.home.HomeScreen
 import com.example.market_app.ui.screens.profile.ProfileScreen
+import com.example.market_app.ui.theme.MarketappTheme
 import com.example.utils.LocalNavController
 
 class MainActivity : ComponentActivity() {

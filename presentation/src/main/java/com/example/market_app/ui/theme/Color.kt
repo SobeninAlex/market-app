@@ -1,4 +1,4 @@
-package com.example.utils.resources
+package com.example.market_app.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

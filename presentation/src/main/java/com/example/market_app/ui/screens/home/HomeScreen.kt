@@ -28,7 +28,7 @@ import com.example.market_app.ui.component.ProfileHeader
 import com.example.market_app.ui.component.SearchBar
 import com.example.utils.LocalNavController
 import com.example.utils.R
-import com.example.utils.setupSystemBarStyleDefault
+import com.example.market_app.ui.theme.setupSystemBarStyleDefault
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

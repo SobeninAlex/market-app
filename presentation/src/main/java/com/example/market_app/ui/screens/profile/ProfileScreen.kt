@@ -7,13 +7,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import com.example.utils.setupSystemBarStyleDefault
+import com.example.market_app.ui.theme.setupSystemBarStyleLight
 
 @Composable
 fun ProfileScreen() {
     val context = LocalContext.current
-    context.setupSystemBarStyleDefault()
+    context.setupSystemBarStyleLight(
+        statusBarColor = Color.LightGray,
+        navigationBarColor = Color.LightGray
+    )
 
     ProfileScreenContent()
 }
