@@ -26,8 +26,8 @@ class HomeViewModel(
         viewModelScope.launch {
             _uiState.value = HomeScreenUiState.Loading
             runCatching {
-                val featured = getProducts("electronics")
-                val popularProducts = getProducts("jewelery")
+                val featured = getProducts(1)
+                val popularProducts = getProducts(2)
                 val categories = getCategories()
                 Triple(first = featured, second = popularProducts, third = categories)
             }.onSuccess { result ->
@@ -46,14 +46,14 @@ class HomeViewModel(
         }
     }
 
-    private suspend fun getProducts(category: String?): List<Product> {
+    private suspend fun getProducts(category: Int?): List<Product> {
         getProductUseCase(category).let { result ->
             when (result) {
                 is ResultWrapper.Failure -> {
                     return emptyList()
                 }
                 is ResultWrapper.Success -> {
-                    return result.value
+                    return result.value.products
                 }
             }
         }
@@ -67,7 +67,7 @@ class HomeViewModel(
                 }
 
                 is ResultWrapper.Success -> {
-                    return result.value
+                    return result.value.categories.map { it.title }
                 }
             }
         }

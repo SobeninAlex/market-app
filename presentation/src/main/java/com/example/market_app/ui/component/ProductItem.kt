@@ -32,7 +32,7 @@ fun ProductItem(
             modifier = Modifier.fillMaxSize()
         ) {
             AsyncImage(
-                model = product.imageUrl,
+                model = product.image,
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
@@ -47,7 +47,7 @@ fun ProductItem(
                 style = MaterialTheme.typography.bodyMedium,
                 maxLines = 1,
                 fontWeight = FontWeight.SemiBold,
-                overflow = TextOverflow.Clip,
+                overflow = TextOverflow.Ellipsis,
                 modifier = Modifier.padding(horizontal = 8.dp)
             )
 

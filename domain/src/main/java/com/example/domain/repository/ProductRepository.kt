@@ -1,10 +1,11 @@
 package com.example.domain.repository
 
 import com.example.domain.entity.Product
+import com.example.domain.entity.ProductList
 import com.example.domain.network.ResultWrapper
 
 interface ProductRepository {
 
-    suspend fun getProducts(category: String?): ResultWrapper<List<Product>>
+    suspend fun getProducts(category: Int?): ResultWrapper<ProductList>
 
 }

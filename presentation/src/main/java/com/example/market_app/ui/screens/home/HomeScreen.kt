@@ -1,5 +1,9 @@
 package com.example.market_app.ui.screens.home
 
+import android.annotation.SuppressLint
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -8,9 +12,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,6 +35,7 @@ import com.example.market_app.ui.component.LoadingScreenContent
 import com.example.market_app.ui.component.ProductsRow
 import com.example.market_app.ui.component.ProfileHeader
 import com.example.market_app.ui.component.SearchBar
+import com.example.market_app.ui.theme.WhiteColor
 import com.example.utils.LocalNavController
 import com.example.utils.R
 import com.example.market_app.ui.theme.setupSystemBarStyleDefault
@@ -96,7 +106,7 @@ private fun HomeScreenContent(
 ) {
     LazyColumn(
         contentPadding = PaddingValues(all = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         item {
             ProfileHeader()
@@ -129,17 +139,31 @@ private fun HomeScreenContent(
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    items(categories) { item ->
-                        Text(
-                            text = item.apply { replaceFirstChar { it.uppercase() } },
-                            style = MaterialTheme.typography.bodyMedium,
-                            fontWeight = FontWeight.SemiBold,
-                            color = MaterialTheme.colorScheme.onPrimary,
-                            modifier = Modifier
-                                .clip(RoundedCornerShape(8.dp))
-                                .background(MaterialTheme.colorScheme.primary)
-                                .padding(8.dp)
-                        )
+                    items(
+                        items = categories,
+                        key = { it }
+                    ) { item ->
+                        val isVisible = remember { mutableStateOf(false) }
+
+                        LaunchedEffect(true) {
+                            isVisible.value = true
+                        }
+
+                        AnimatedVisibility(
+                            visible = isVisible.value,
+                            enter = fadeIn() + expandVertically()
+                        ) {
+                            Text(
+                                text = item.apply { replaceFirstChar { it.uppercase() } },
+                                style = MaterialTheme.typography.bodyMedium,
+                                fontWeight = FontWeight.SemiBold,
+                                color = WhiteColor,
+                                modifier = Modifier
+                                    .clip(RoundedCornerShape(8.dp))
+                                    .background(MaterialTheme.colorScheme.primary)
+                                    .padding(8.dp)
+                            )
+                        }
                     }
                 }
             }

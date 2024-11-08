@@ -6,7 +6,7 @@ class GetProductUseCase(
     private val productRepository: ProductRepository
 ) {
 
-    suspend operator fun invoke(category: String?) =
+    suspend operator fun invoke(category: Int?) =
         productRepository.getProducts(category)
 
 }

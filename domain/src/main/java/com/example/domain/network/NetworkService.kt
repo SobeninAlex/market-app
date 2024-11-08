@@ -1,11 +1,13 @@
 package com.example.domain.network
 
+import com.example.domain.entity.CategoryList
 import com.example.domain.entity.Product
+import com.example.domain.entity.ProductList
 
 interface NetworkService {
 
-    suspend fun getProducts(category: String?): ResultWrapper<List<Product>>
-    suspend fun getCategories(): ResultWrapper<List<String>>
+    suspend fun getProducts(category: Int?): ResultWrapper<ProductList>
+    suspend fun getCategories(): ResultWrapper<CategoryList>
 
 }
 
