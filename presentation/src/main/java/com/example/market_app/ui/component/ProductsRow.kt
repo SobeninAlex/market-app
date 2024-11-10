@@ -74,8 +74,6 @@ fun ProductsRow(
                 ) {
                     ProductItem(item)
                 }
-
-
             }
         }
     }

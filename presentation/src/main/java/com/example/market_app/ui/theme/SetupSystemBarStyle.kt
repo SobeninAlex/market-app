@@ -23,18 +23,24 @@ import androidx.core.view.WindowCompat
 /**
  * enableEdgeToEdge
  */
-fun Context.setupSystemBarStyleDefault() = with(this as ComponentActivity) {
+fun Context.setupSystemBarStyleDefault(
+    statusBarColor: Color? = null,
+    navigationBarColor: Color? = null
+) = with(this as ComponentActivity) {
     val statusBarStyle: SystemBarStyle
     val navigationBarStyle: SystemBarStyle
 
-    when(resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+    when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
         Configuration.UI_MODE_NIGHT_YES -> {
-            statusBarStyle = SystemBarStyle.dark(BackgroundCardColorDark.toArgb())
-            navigationBarStyle = SystemBarStyle.dark(BackgroundCardColorDark.toArgb())
+            statusBarStyle = SystemBarStyle.dark(statusBarColor?.toArgb() ?: BackgroundCardColorDark.toArgb())
+            navigationBarStyle = SystemBarStyle.dark(navigationBarColor?.toArgb() ?: BackgroundCardColorDark.toArgb())
         }
+
         else -> {
-            statusBarStyle = SystemBarStyle.light(BackgroundCardColorLight.toArgb(), BlackColor.toArgb())
-            navigationBarStyle = SystemBarStyle.light(BackgroundCardColorLight.toArgb(), BlackColor.toArgb())
+            statusBarStyle =
+                SystemBarStyle.light(statusBarColor?.toArgb() ?: BackgroundCardColorLight.toArgb(), BlackColor.toArgb())
+            navigationBarStyle =
+                SystemBarStyle.light(navigationBarColor?.toArgb() ?: BackgroundCardColorLight.toArgb(), BlackColor.toArgb())
         }
     }
 

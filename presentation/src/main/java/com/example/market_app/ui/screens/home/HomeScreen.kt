@@ -42,11 +42,12 @@ import com.example.market_app.ui.theme.setupSystemBarStyleDefault
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    scaffoldPaddingValues: PaddingValues
+) {
     val context = LocalContext.current
     context.setupSystemBarStyleDefault()
 
-    val navController = LocalNavController.current
     val viewModel = koinViewModel<HomeViewModel>()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -88,6 +89,7 @@ fun HomeScreen() {
     }
 
     HomeScreenContent(
+        scaffoldPaddingValues = scaffoldPaddingValues,
         featured = featured.value,
         popularProducts = popularProducts.value,
         categories = categories.value,
@@ -98,6 +100,7 @@ fun HomeScreen() {
 
 @Composable
 private fun HomeScreenContent(
+    scaffoldPaddingValues: PaddingValues,
     featured: List<Product>,
     popularProducts: List<Product>,
     categories: List<String>,
@@ -105,6 +108,7 @@ private fun HomeScreenContent(
     errorMsg: String? = null
 ) {
     LazyColumn(
+        modifier = Modifier.padding(scaffoldPaddingValues),
         contentPadding = PaddingValues(all = 16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {

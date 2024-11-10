@@ -15,14 +15,16 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.utils.LocalNavController
 import com.example.utils.routeClass
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun BottomNavBar(
-    navController: NavController,
-    tabs: ImmutableList<AppTab>
+    tabs: ImmutableList<AppTab>,
+    navController: NavHostController
 ) {
     NavigationBar(
         modifier = Modifier.height(100.dp),
