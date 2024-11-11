@@ -2,7 +2,9 @@ package com.example.market_app.ui.screens.profile
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,11 +28,19 @@ fun ProfileScreen() {
 private fun ProfileScreenContent(
 
 ) {
-    Box(modifier = Modifier.fillMaxSize()) {
-        Text(
-            modifier = Modifier.align(Alignment.Center),
-            text = "ProfileScreen",
-            color = MaterialTheme.colorScheme.primary
-        )
+    Scaffold(
+        containerColor = MaterialTheme.colorScheme.background
+    ) { paddingValues ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            Text(
+                modifier = Modifier.align(Alignment.Center),
+                text = "ProfileScreen",
+                color = MaterialTheme.colorScheme.primary
+            )
+        }
     }
 }

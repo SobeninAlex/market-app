@@ -26,6 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import com.example.domain.entity.Product
 import com.example.market_app.navigation.HomeGraph
 import com.example.market_app.ui.component.LoadingScreenContent
@@ -106,7 +107,9 @@ private fun HomeScreenContent(
     errorMsg: String? = null,
     onProductClick: (Product) -> Unit
 ) {
-    Scaffold { paddingValues ->
+    Scaffold(
+        containerColor = MaterialTheme.colorScheme.background
+    ) { paddingValues ->
         LazyColumn(
             modifier = Modifier.padding(paddingValues),
             contentPadding = PaddingValues(all = 16.dp),

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -86,7 +87,9 @@ private fun ProductDetailsScreenContent(
     onBackPressed: () -> Unit,
     onFavouriteClick: () -> Unit
 ) {
-    Scaffold { paddingValues ->
+    Scaffold(
+        containerColor = MaterialTheme.colorScheme.background
+    ) { paddingValues ->
         Box(
             modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding())
         ) {
@@ -136,14 +139,20 @@ private fun ProductDetailsScreenContent(
                     .background(MaterialTheme.colorScheme.background),
             ) {
                 item {
-                    AsyncImage(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .clip(RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp)),
-                        model = product.image,
-                        contentDescription = null,
-                        contentScale = ContentScale.Crop,
-                    )
+                    Box(
+                        modifier = Modifier.fillMaxWidth()
+                            .aspectRatio(1f / 1f)
+                            .clip(RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp))
+                            .background(MaterialTheme.colorScheme.primaryContainer)
+                    ) {
+                        AsyncImage(
+                            modifier = Modifier
+                                .fillMaxSize(),
+                            model = product.image,
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop,
+                        )
+                    }
 
                     Column(
                         modifier = Modifier
