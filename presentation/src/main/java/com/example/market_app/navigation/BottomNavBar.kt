@@ -24,8 +24,9 @@ import kotlinx.collections.immutable.ImmutableList
 @Composable
 fun BottomNavBar(
     tabs: ImmutableList<AppTab>,
-    navController: NavHostController
 ) {
+    val navController = LocalNavController.current
+
     NavigationBar(
         modifier = Modifier.height(100.dp),
         containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -45,9 +46,10 @@ fun BottomNavBar(
                     if (currentTab != null) {
                         navController.navigate(tab.graph) {
                             popUpTo(currentTab.graph) {
-                                inclusive = true
+                                //inclusive = true
                                 saveState = true
                             }
+                            launchSingleTop = true
                             restoreState = true
                         }
                     }

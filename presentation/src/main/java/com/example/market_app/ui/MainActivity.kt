@@ -69,18 +69,20 @@ private fun NavApp() {
     val navController = rememberNavController()
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
 
-    Scaffold(
-        containerColor = MaterialTheme.colorScheme.background,
-        bottomBar = {
-            BottomNavBar(
-                navController = navController,
-                tabs = MainTabs
-            )
-        }
-    ) { paddingValues ->
-        CompositionLocalProvider(
-            LocalNavController provides navController
-        ) {
+    CompositionLocalProvider(
+        LocalNavController provides navController
+    ) {
+        Scaffold(
+            containerColor = MaterialTheme.colorScheme.background,
+            bottomBar = {
+                if (currentBackStackEntry.routeClass() != ProductDetailsRoute::class) {
+                    BottomNavBar(
+                        tabs = MainTabs
+                    )
+                }
+            }
+        ) { paddingValues ->
+
             NavHost(
                 modifier = Modifier.fillMaxSize(),
                 navController = navController,
