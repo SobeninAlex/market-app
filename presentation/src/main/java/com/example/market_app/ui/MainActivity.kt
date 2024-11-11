@@ -73,18 +73,18 @@ private fun NavApp() {
         LocalNavController provides navController
     ) {
         Scaffold(
+            modifier = Modifier.fillMaxSize(),
             containerColor = MaterialTheme.colorScheme.background,
             bottomBar = {
                 if (currentBackStackEntry.routeClass() != ProductDetailsRoute::class) {
-                    BottomNavBar(
-                        tabs = MainTabs
-                    )
+                    BottomNavBar()
                 }
             }
         ) { paddingValues ->
+            val bottomPadding = paddingValues.calculateBottomPadding()
+            val topPadding = paddingValues.calculateTopPadding()
 
             NavHost(
-                modifier = Modifier.fillMaxSize(),
                 navController = navController,
                 startDestination = HomeGraph,
                 exitTransition = {
@@ -116,7 +116,7 @@ private fun NavApp() {
                     startDestination = HomeRoute,
                 ) {
                     composable<HomeRoute> {
-                        HomeScreen(scaffoldPaddingValues = paddingValues)
+                        HomeScreen()
                     }
 
                     composable<ProductDetailsRoute>(

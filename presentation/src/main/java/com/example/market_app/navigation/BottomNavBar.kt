@@ -22,10 +22,9 @@ import com.example.utils.routeClass
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable
-fun BottomNavBar(
-    tabs: ImmutableList<AppTab>,
-) {
+fun BottomNavBar() {
     val navController = LocalNavController.current
+    val tabs = MainTabs
 
     NavigationBar(
         modifier = Modifier.height(100.dp),

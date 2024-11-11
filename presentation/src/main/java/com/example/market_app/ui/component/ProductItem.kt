@@ -23,15 +23,14 @@ import com.example.utils.LocalNavController
 
 @Composable
 fun ProductItem(
-    product: Product
+    product: Product,
+    onProductClick: (Product) -> Unit
 ) {
-    val navController = LocalNavController.current
-
     ClickableRoundedColumn(
         modifier = Modifier.size(width = 126.dp, height = 144.dp),
         contentPadding = PaddingValues(all = 0.dp),
         onClick = {
-            navController.navigate(HomeGraph.ProductDetailsRoute(product))
+            onProductClick(product)
         }
     ) {
         Column(

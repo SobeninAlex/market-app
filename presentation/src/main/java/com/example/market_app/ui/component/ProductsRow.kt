@@ -33,7 +33,8 @@ import com.example.utils.R
 @Composable
 fun ProductsRow(
     products: List<Product>,
-    title: String
+    title: String,
+    onProductClick: (Product) -> Unit
 ) {
     Column {
         Box(
@@ -68,11 +69,11 @@ fun ProductsRow(
                     isVisible.value = true
                 }
 
-                androidx.compose.animation.AnimatedVisibility(
+                AnimatedVisibility(
                     visible = isVisible.value,
                     enter = fadeIn() + expandVertically()
                 ) {
-                    ProductItem(item)
+                    ProductItem(product = item, onProductClick = onProductClick)
                 }
             }
         }

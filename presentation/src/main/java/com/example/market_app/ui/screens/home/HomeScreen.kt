@@ -31,6 +31,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.domain.entity.Product
+import com.example.market_app.navigation.HomeGraph
 import com.example.market_app.ui.component.LoadingScreenContent
 import com.example.market_app.ui.component.ProductsRow
 import com.example.market_app.ui.component.ProfileHeader
@@ -42,11 +43,11 @@ import com.example.market_app.ui.theme.setupSystemBarStyleDefault
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun HomeScreen(
-    scaffoldPaddingValues: PaddingValues
-) {
+fun HomeScreen() {
     val context = LocalContext.current
     context.setupSystemBarStyleDefault()
+
+    val navController = LocalNavController.current
 
     val viewModel = koinViewModel<HomeViewModel>()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -89,26 +90,27 @@ fun HomeScreen(
     }
 
     HomeScreenContent(
-        scaffoldPaddingValues = scaffoldPaddingValues,
         featured = featured.value,
         popularProducts = popularProducts.value,
         categories = categories.value,
         isLoading = loading.value,
-        errorMsg = error.value
+        errorMsg = error.value,
+        onProductClick = {
+            navController.navigate(HomeGraph.ProductDetailsRoute(it))
+        }
     )
 }
 
 @Composable
 private fun HomeScreenContent(
-    scaffoldPaddingValues: PaddingValues,
     featured: List<Product>,
     popularProducts: List<Product>,
     categories: List<String>,
     isLoading: Boolean = false,
-    errorMsg: String? = null
+    errorMsg: String? = null,
+    onProductClick: (Product) -> Unit
 ) {
     LazyColumn(
-        modifier = Modifier.padding(scaffoldPaddingValues),
         contentPadding = PaddingValues(all = 16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
@@ -177,7 +179,8 @@ private fun HomeScreenContent(
             item {
                 ProductsRow(
                     products = featured,
-                    title = stringResource(R.string.title_featured)
+                    title = stringResource(R.string.title_featured),
+                    onProductClick = onProductClick
                 )
             }
         }
@@ -186,7 +189,8 @@ private fun HomeScreenContent(
             item {
                 ProductsRow(
                     products = popularProducts,
-                    title = stringResource(R.string.title_popular)
+                    title = stringResource(R.string.title_popular),
+                    onProductClick = onProductClick
                 )
             }
         }
