@@ -4,6 +4,10 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.FlingBehavior
+import androidx.compose.foundation.gestures.ScrollableState
+import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,8 +15,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -34,7 +40,9 @@ import com.example.utils.R
 fun ProductsRow(
     products: List<Product>,
     title: String,
-    onProductClick: (Product) -> Unit
+    onProductClick: (Product) -> Unit,
+    state: LazyListState = rememberLazyListState(),
+    flingBehavior: FlingBehavior = rememberSnapFlingBehavior(lazyListState = state)
 ) {
     Column {
         Box(
@@ -57,7 +65,9 @@ fun ProductsRow(
         Spacer(modifier = Modifier.height(8.dp))
 
         LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            state = state,
+            flingBehavior = flingBehavior,
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             items(
                 items = products,

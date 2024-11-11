@@ -1,6 +1,5 @@
 package com.example.market_app.ui.screens.home
 
-import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
@@ -12,12 +11,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -37,9 +33,9 @@ import com.example.market_app.ui.component.ProductsRow
 import com.example.market_app.ui.component.ProfileHeader
 import com.example.market_app.ui.component.SearchBar
 import com.example.market_app.ui.theme.WhiteColor
+import com.example.market_app.ui.theme.setupSystemBarStyleDefault
 import com.example.utils.LocalNavController
 import com.example.utils.R
-import com.example.market_app.ui.theme.setupSystemBarStyleDefault
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -110,88 +106,92 @@ private fun HomeScreenContent(
     errorMsg: String? = null,
     onProductClick: (Product) -> Unit
 ) {
-    LazyColumn(
-        contentPadding = PaddingValues(all = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-    ) {
-        item {
-            ProfileHeader()
-        }
+    Scaffold { paddingValues ->
+        LazyColumn(
+            modifier = Modifier.padding(paddingValues),
+            contentPadding = PaddingValues(all = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
 
-        item {
-            SearchBar(
-                value = "",
-                onTextChanged = {}
-            )
-        }
-
-        if (isLoading) {
             item {
-                LoadingScreenContent()
+                ProfileHeader()
             }
-        }
 
-        errorMsg?.let { msg ->
             item {
-                Text(
-                    text = msg,
-                    style = MaterialTheme.typography.bodyMedium
+                SearchBar(
+                    value = "",
+                    onTextChanged = {}
                 )
             }
-        }
 
-        if (categories.isNotEmpty()) {
-            item {
-                LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    items(
-                        items = categories,
-                        key = { it }
-                    ) { item ->
-                        val isVisible = remember { mutableStateOf(false) }
+            if (isLoading) {
+                item {
+                    LoadingScreenContent()
+                }
+            }
 
-                        LaunchedEffect(true) {
-                            isVisible.value = true
-                        }
+            errorMsg?.let { msg ->
+                item {
+                    Text(
+                        text = msg,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
+            }
 
-                        AnimatedVisibility(
-                            visible = isVisible.value,
-                            enter = fadeIn() + expandVertically()
-                        ) {
-                            Text(
-                                text = item.apply { replaceFirstChar { it.uppercase() } },
-                                style = MaterialTheme.typography.bodyMedium,
-                                fontWeight = FontWeight.SemiBold,
-                                color = WhiteColor,
-                                modifier = Modifier
-                                    .clip(RoundedCornerShape(8.dp))
-                                    .background(MaterialTheme.colorScheme.primary)
-                                    .padding(8.dp)
-                            )
+            if (categories.isNotEmpty()) {
+                item {
+                    LazyRow(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        items(
+                            items = categories,
+                            key = { it }
+                        ) { item ->
+                            val isVisible = remember { mutableStateOf(false) }
+
+                            LaunchedEffect(true) {
+                                isVisible.value = true
+                            }
+
+                            AnimatedVisibility(
+                                visible = isVisible.value,
+                                enter = fadeIn() + expandVertically()
+                            ) {
+                                Text(
+                                    text = item.apply { replaceFirstChar { it.uppercase() } },
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = WhiteColor,
+                                    modifier = Modifier
+                                        .clip(RoundedCornerShape(8.dp))
+                                        .background(MaterialTheme.colorScheme.primary)
+                                        .padding(8.dp)
+                                )
+                            }
                         }
                     }
                 }
             }
-        }
 
-        if (featured.isNotEmpty()) {
-            item {
-                ProductsRow(
-                    products = featured,
-                    title = stringResource(R.string.title_featured),
-                    onProductClick = onProductClick
-                )
+            if (featured.isNotEmpty()) {
+                item {
+                    ProductsRow(
+                        products = featured,
+                        title = stringResource(R.string.title_featured),
+                        onProductClick = onProductClick
+                    )
+                }
             }
-        }
 
-        if (popularProducts.isNotEmpty()) {
-            item {
-                ProductsRow(
-                    products = popularProducts,
-                    title = stringResource(R.string.title_popular),
-                    onProductClick = onProductClick
-                )
+            if (popularProducts.isNotEmpty()) {
+                item {
+                    ProductsRow(
+                        products = popularProducts,
+                        title = stringResource(R.string.title_popular),
+                        onProductClick = onProductClick
+                    )
+                }
             }
         }
     }

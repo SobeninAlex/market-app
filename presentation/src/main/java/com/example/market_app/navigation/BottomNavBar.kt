@@ -22,8 +22,9 @@ import com.example.utils.routeClass
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable
-fun BottomNavBar() {
-    val navController = LocalNavController.current
+fun BottomNavBar(
+    navController: NavController
+) {
     val tabs = MainTabs
 
     NavigationBar(

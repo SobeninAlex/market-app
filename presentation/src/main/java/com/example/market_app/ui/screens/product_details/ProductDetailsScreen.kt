@@ -28,6 +28,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -54,6 +55,7 @@ import com.example.market_app.ui.theme.WhiteColor
 import com.example.market_app.ui.theme.roundedCornerShape12
 import com.example.market_app.ui.theme.roundedCornerShape16
 import com.example.market_app.ui.theme.setupSystemBarStyleDefault
+import com.example.utils.LocalNavController
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -65,9 +67,17 @@ fun ProductDetailsScreen(
         statusBarColor = Color.Transparent,
     )
 
+    val navController = LocalNavController.current
+
     val viewModel = koinViewModel<ProductDetailsViewModel>()
 
-    ProductDetailsScreenContent(product, onBackPressed = {}, onFavouriteClick = {})
+    ProductDetailsScreenContent(
+        product,
+        onBackPressed = {
+            navController.navigateUp()
+        },
+        onFavouriteClick = {}
+    )
 }
 
 @Composable
@@ -76,189 +86,193 @@ private fun ProductDetailsScreenContent(
     onBackPressed: () -> Unit,
     onFavouriteClick: () -> Unit
 ) {
-    Box {
-        IconButton(
-            modifier = Modifier
-                .padding(start = 16.dp, top = 48.dp)
-                .size(48.dp)
-                .clip(CircleShape)
-                .align(Alignment.TopStart)
-                .zIndex(1f),
-            onClick = onBackPressed,
-            colors = IconButtonDefaults.iconButtonColors(
-                containerColor = LightGrayColor30
-            )
+    Scaffold { paddingValues ->
+        Box(
+            modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding())
         ) {
-            Icon(
-                modifier = Modifier.size(28.dp),
-                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = "back",
-                tint = BlackColor
-            )
-        }
-
-        IconButton(
-            modifier = Modifier
-                .padding(end = 16.dp, top = 48.dp)
-                .size(48.dp)
-                .clip(CircleShape)
-                .align(Alignment.TopEnd)
-                .zIndex(1f),
-            onClick = onFavouriteClick,
-            colors = IconButtonDefaults.iconButtonColors(
-                containerColor = LightGrayColor30
-            )
-        ) {
-            Icon(
-                modifier = Modifier.size(28.dp),
-                imageVector = Icons.Outlined.Favorite,
-                contentDescription = "back",
-                tint = GrayColor50
-            )
-        }
-
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background),
-        ) {
-            item {
-                AsyncImage(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clip(RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp)),
-                    model = product.image,
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
+            IconButton(
+                modifier = Modifier
+                    .padding(start = 16.dp, top = 48.dp)
+                    .size(48.dp)
+                    .clip(CircleShape)
+                    .align(Alignment.TopStart)
+                    .zIndex(1f),
+                onClick = onBackPressed,
+                colors = IconButtonDefaults.iconButtonColors(
+                    containerColor = LightGrayColor30
                 )
+            ) {
+                Icon(
+                    modifier = Modifier.size(28.dp),
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "back",
+                    tint = BlackColor
+                )
+            }
 
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
+            IconButton(
+                modifier = Modifier
+                    .padding(end = 16.dp, top = 48.dp)
+                    .size(48.dp)
+                    .clip(CircleShape)
+                    .align(Alignment.TopEnd)
+                    .zIndex(1f),
+                onClick = onFavouriteClick,
+                colors = IconButtonDefaults.iconButtonColors(
+                    containerColor = LightGrayColor30
+                )
+            ) {
+                Icon(
+                    modifier = Modifier.size(28.dp),
+                    imageVector = Icons.Outlined.Favorite,
+                    contentDescription = "back",
+                    tint = GrayColor50
+                )
+            }
+
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.background),
+            ) {
+                item {
+                    AsyncImage(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clip(RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp)),
+                        model = product.image,
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                    )
+
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                text = product.title,
+                                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold),
+                                color = MaterialTheme.colorScheme.onBackground
+                            )
+
+                            Text(
+                                text = product.priceString,
+                                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold),
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                        }
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Outlined.Star,
+                                contentDescription = null,
+                                tint = StarColor
+                            )
+
+                            Text(
+                                text = "4.5", //todo
+                                style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.SemiBold),
+                                color = MaterialTheme.colorScheme.onBackground
+                            )
+
+                            Text(
+                                text = "(10 Reviews)", //todo
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = Color.Gray
+                            )
+                        }
+
+                        HorizontalDivider(
+                            modifier = Modifier.padding(vertical = 8.dp),
+                            color = MaterialTheme.colorScheme.outline
+                        )
+
                         Text(
-                            text = product.title,
-                            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold),
+                            text = "Description",
+                            style = MaterialTheme.typography.titleMedium,
                             color = MaterialTheme.colorScheme.onBackground
                         )
 
                         Text(
-                            text = product.priceString,
-                            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold),
-                            color = MaterialTheme.colorScheme.primary
-                        )
-                    }
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Outlined.Star,
-                            contentDescription = null,
-                            tint = StarColor
-                        )
-
-                        Text(
-                            text = "4.5", //todo
-                            style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.SemiBold),
-                            color = MaterialTheme.colorScheme.onBackground
-                        )
-
-                        Text(
-                            text = "(10 Reviews)", //todo
+                            text = product.description,
                             style = MaterialTheme.typography.bodyMedium,
                             color = Color.Gray
                         )
-                    }
 
-                    HorizontalDivider(
-                        modifier = Modifier.padding(vertical = 8.dp),
-                        color = MaterialTheme.colorScheme.outline
-                    )
+                        HorizontalDivider(
+                            modifier = Modifier.padding(vertical = 8.dp),
+                            color = MaterialTheme.colorScheme.outline
+                        )
 
-                    Text(
-                        text = "Description",
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
+                        Text(
+                            text = "Size",
+                            style = MaterialTheme.typography.titleMedium,
+                            color = MaterialTheme.colorScheme.onBackground
+                        )
 
-                    Text(
-                        text = product.description,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = Color.Gray
-                    )
-
-                    HorizontalDivider(
-                        modifier = Modifier.padding(vertical = 8.dp),
-                        color = MaterialTheme.colorScheme.outline
-                    )
-
-                    Text(
-                        text = "Size",
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        repeat(4) {
-                            SizeCardItem(
-                                size = "${it + 1}",
-                                isSelected = it == 0,
-                                onClick = {
-                                    //todo
-                                }
-                            )
-                        }
-                    }
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(12.dp)
-                    ) {
-                        Button(
-                            onClick = {  },
-                            shape = roundedCornerShape16,
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = MaterialTheme.colorScheme.primary,
-                                contentColor = WhiteColor
-                            ),
-                            modifier = Modifier.weight(1f)
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-                            Text(
-                                text = "Buy Now",
-                                style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold),
-                                color = AccentColor
-                            )
+                            repeat(4) {
+                                SizeCardItem(
+                                    size = "${it + 1}",
+                                    isSelected = it == 0,
+                                    onClick = {
+                                        //todo
+                                    }
+                                )
+                            }
                         }
 
-                        Button(
-                            onClick = {  },
-                            shape = roundedCornerShape16,
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = LightGrayColor50,
-                            )
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(12.dp)
                         ) {
-                            Icon(
-                                painter = painterResource(R.drawable.ic_basket),
-                                contentDescription = null,
-                                tint = Color.Gray
-                            )
+                            Button(
+                                onClick = {  },
+                                shape = roundedCornerShape16,
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = MaterialTheme.colorScheme.primary,
+                                    contentColor = WhiteColor
+                                ),
+                                modifier = Modifier.weight(1f)
+                            ) {
+                                Text(
+                                    text = "Buy Now",
+                                    style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold),
+                                    color = AccentColor
+                                )
+                            }
+
+                            Button(
+                                onClick = {  },
+                                shape = roundedCornerShape16,
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = LightGrayColor50,
+                                )
+                            ) {
+                                Icon(
+                                    painter = painterResource(R.drawable.ic_basket),
+                                    contentDescription = null,
+                                    tint = Color.Gray
+                                )
+                            }
                         }
                     }
                 }
