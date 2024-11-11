@@ -1,9 +1,14 @@
 package com.example.data.network
 
+import com.example.data.dto.request.AddCartRequestDto.Companion.fromAddCartRequest
+import com.example.data.dto.response.CartListResponse
 import com.example.data.dto.response.CategoryListResponse
 import com.example.data.dto.response.ProductListResponse
+import com.example.domain.entity.Cart
+import com.example.domain.entity.CartList
 import com.example.domain.entity.CategoryList
 import com.example.domain.entity.ProductList
+import com.example.domain.entity.request.AddCartRequest
 import com.example.domain.network.NetworkService
 import com.example.domain.network.ResultWrapper
 import io.ktor.client.HttpClient
@@ -24,7 +29,7 @@ class NetworkServiceImpl(
 
     override suspend fun getProducts(category: Int?): ResultWrapper<ProductList> {
         val url = if (category != null) "$baseUrl/products/category/$category" else "$baseUrl/products"
-        return makeWebRequest<ProductListResponse, ProductList>(
+        return makeWebRequest(
             url = url,
             method = HttpMethod.Get,
             mapper = { products: ProductListResponse ->
@@ -40,6 +45,18 @@ class NetworkServiceImpl(
             method = HttpMethod.Get,
             mapper = { categories: CategoryListResponse ->
                 categories.toCategoryList()
+            }
+        )
+    }
+
+    override suspend fun addProductToCart(request: AddCartRequest): ResultWrapper<CartList> {
+        val url = "$baseUrl/cart/1"
+        return makeWebRequest(
+            url = url,
+            method = HttpMethod.Post,
+            body = fromAddCartRequest(request),
+            mapper = { cartListResponse: CartListResponse ->
+                cartListResponse.toCartList()
             }
         )
     }
