@@ -9,4 +9,6 @@ interface CartRepository {
 
     suspend fun addProductToCart(request: AddCartRequest) : ResultWrapper<CartList>
 
+    suspend fun getCart(): ResultWrapper<CartList>
+
 }

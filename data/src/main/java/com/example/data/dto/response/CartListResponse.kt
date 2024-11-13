@@ -6,12 +6,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CartListResponse(
-    val carts: List<CartDto>,
+    val data: List<CartDto>,
     val msg: String
 ) {
 
     fun toCartList() = CartList(
-        carts = carts.map { it.toCart() },
+        carts = data.map { it.toCart() },
         msg = msg
     )
 

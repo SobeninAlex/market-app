@@ -1,6 +1,5 @@
 package com.example.market_app.ui.screens.product_details
 
-import android.widget.Space
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -32,6 +31,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -43,8 +43,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.example.domain.entity.Product
+import com.example.market_app.ui.component.LoadingScreenContent
 import com.example.market_app.ui.theme.AccentColor
 import com.example.utils.R
 import com.example.market_app.ui.theme.BlackColor
@@ -56,7 +58,9 @@ import com.example.market_app.ui.theme.WhiteColor
 import com.example.market_app.ui.theme.roundedCornerShape12
 import com.example.market_app.ui.theme.roundedCornerShape16
 import com.example.market_app.ui.theme.setupSystemBarStyleDefault
-import com.example.utils.LocalNavController
+import com.example.utils.event.EventConsumer
+import com.example.utils.navigation.LocalNavController
+import com.example.utils.navigation.routeClass
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -69,23 +73,49 @@ fun ProductDetailsScreen(
     )
 
     val navController = LocalNavController.current
-
     val viewModel = koinViewModel<ProductDetailsViewModel>()
+    val rememberScreenRoute = remember { navController.currentBackStackEntry.routeClass() }
 
-    ProductDetailsScreenContent(
-        product,
-        onBackPressed = {
-            navController.navigateUp()
-        },
-        onFavouriteClick = {}
-    )
+    EventConsumer(viewModel.exitChanel) {
+        //наверное эту проверку можно и не делать...
+        if (rememberScreenRoute == navController.currentBackStackEntry.routeClass()) {
+            navController.popBackStack()
+        }
+    }
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        val uiState = viewModel.state.collectAsStateWithLifecycle()
+
+        when (val current = uiState.value) {
+            is ProductDetailsScreenUiState.Loading -> {
+                LoadingScreenContent(
+                    text = current.message, modifier = Modifier
+                        .zIndex(1f)
+                        .background(
+                            BlackColor.copy(alpha = 0.9f)
+                        )
+                )
+            }
+            else -> {}
+        }
+
+        ProductDetailsScreenContent(
+            product = product,
+            onBackPressed = {
+                navController.popBackStack()
+            },
+            onFavouriteClick = {},
+            event = viewModel::onEvent
+        )
+    }
 }
 
 @Composable
 private fun ProductDetailsScreenContent(
     product: Product,
     onBackPressed: () -> Unit,
-    onFavouriteClick: () -> Unit
+    onFavouriteClick: () -> Unit,
+    event: (ProductDetailsEvent) -> Unit
 ) {
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background
@@ -140,7 +170,8 @@ private fun ProductDetailsScreenContent(
             ) {
                 item {
                     Box(
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
                             .aspectRatio(1f / 1f)
                             .clip(RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp))
                             .background(MaterialTheme.colorScheme.primaryContainer)
@@ -254,7 +285,9 @@ private fun ProductDetailsScreenContent(
                             horizontalArrangement = Arrangement.spacedBy(12.dp)
                         ) {
                             Button(
-                                onClick = {  },
+                                onClick = {
+                                    event(ProductDetailsEvent.AddProductToCart(product))
+                                },
                                 shape = roundedCornerShape16,
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = MaterialTheme.colorScheme.primary,
@@ -270,7 +303,9 @@ private fun ProductDetailsScreenContent(
                             }
 
                             Button(
-                                onClick = {  },
+                                onClick = {
+                                    event(ProductDetailsEvent.AddProductToCart(product))
+                                },
                                 shape = roundedCornerShape16,
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = LightGrayColor50,
@@ -320,7 +355,11 @@ fun SizeCardItem(
 @Composable
 @Preview(showBackground = true)
 private fun ProductDetailsScreen() {
-    ProductDetailsScreenContent(Product.DEFAULT, onBackPressed = {}, onFavouriteClick = {})
+    ProductDetailsScreenContent(
+        Product.DEFAULT,
+        onBackPressed = {},
+        onFavouriteClick = {},
+        event = {})
 }
 
 

@@ -1,4 +1,4 @@
-package com.example.utils
+package com.example.utils.navigation
 
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.navigation.NavController

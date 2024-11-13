@@ -18,8 +18,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.domain.entity.Product
-import com.example.market_app.navigation.HomeGraph
-import com.example.utils.LocalNavController
 
 @Composable
 fun ProductItem(

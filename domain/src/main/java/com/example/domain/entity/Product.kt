@@ -1,6 +1,7 @@
 package com.example.domain.entity
 
 import android.os.Parcelable
+import com.example.domain.entity.request.AddCartRequest
 import com.example.utils.StringSanitizer
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
@@ -17,6 +18,14 @@ data class Product(
 ) : Parcelable {
 
     val priceString: String get() = "$$price"
+
+    fun toAddCartRequest(quantity: Int, userId: Int) = AddCartRequest(
+        productId = id,
+        productName = title,
+        price = price,
+        quantity = quantity,
+        userId = userId
+    )
 
     companion object {
         val DEFAULT = Product(

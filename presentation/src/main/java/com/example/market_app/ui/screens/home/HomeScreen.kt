@@ -26,7 +26,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
 import com.example.domain.entity.Product
 import com.example.market_app.navigation.HomeGraph
 import com.example.market_app.ui.component.LoadingScreenContent
@@ -35,7 +34,7 @@ import com.example.market_app.ui.component.ProfileHeader
 import com.example.market_app.ui.component.SearchBar
 import com.example.market_app.ui.theme.WhiteColor
 import com.example.market_app.ui.theme.setupSystemBarStyleDefault
-import com.example.utils.LocalNavController
+import com.example.utils.navigation.LocalNavController
 import com.example.utils.R
 import org.koin.androidx.compose.koinViewModel
 
@@ -129,7 +128,7 @@ private fun HomeScreenContent(
 
             if (isLoading) {
                 item {
-                    LoadingScreenContent()
+                    LoadingScreenContent(text = "Loading...")
                 }
             }
 

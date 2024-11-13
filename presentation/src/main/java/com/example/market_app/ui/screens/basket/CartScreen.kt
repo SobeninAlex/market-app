@@ -14,18 +14,18 @@ import com.example.market_app.ui.theme.MainColor
 import com.example.market_app.ui.theme.setupSystemBarStyleDark
 
 @Composable
-fun BasketScreen() {
+fun CartScreen() {
     val context = LocalContext.current
     context.setupSystemBarStyleDark(
         statusBarColor = MainColor,
         navigationBarColor = MainColor
     )
 
-    BasketScreenContent()
+    CartScreenContent()
 }
 
 @Composable
-private fun BasketScreenContent(
+private fun CartScreenContent(
 
 ) {
     Scaffold(
@@ -42,5 +42,6 @@ private fun BasketScreenContent(
                 color = MaterialTheme.colorScheme.primary
             )
         }
+
     }
 }

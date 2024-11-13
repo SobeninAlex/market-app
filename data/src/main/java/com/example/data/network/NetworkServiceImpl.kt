@@ -15,6 +15,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.header
 import io.ktor.client.request.request
+import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.HttpMethod
 import io.ktor.http.Parameters
@@ -61,8 +62,18 @@ class NetworkServiceImpl(
         )
     }
 
-    @OptIn(InternalAPI::class)
-    suspend inline fun <reified I, O> makeWebRequest(
+    override suspend fun getCart(): ResultWrapper<CartList> {
+        val url = "$baseUrl/cart/1"
+        return makeWebRequest(
+            url = url,
+            method = HttpMethod.Get,
+            mapper = { cartListResponse: CartListResponse ->
+                cartListResponse.toCartList()
+            }
+        )
+    }
+
+    private suspend inline fun <reified I, O> makeWebRequest(
         url: String,
         method: HttpMethod,
         body: Any? = null,
@@ -87,7 +98,7 @@ class NetworkServiceImpl(
                 }
 
                 if (body != null) {
-                    this.body = body
+                    setBody(body)
                 }
 
                 contentType(ContentType.Application.Json)

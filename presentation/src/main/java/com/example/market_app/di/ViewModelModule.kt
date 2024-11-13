@@ -1,5 +1,6 @@
 package com.example.market_app.di
 
+import com.example.market_app.ui.screens.basket.CartViewModel
 import com.example.market_app.ui.screens.home.HomeViewModel
 import com.example.market_app.ui.screens.product_details.ProductDetailsViewModel
 import org.koin.core.module.dsl.viewModel
@@ -14,6 +15,14 @@ val viewModelModule = module {
     }
 
     viewModel {
-        ProductDetailsViewModel()
+        ProductDetailsViewModel(
+            addProductToCartUseCase = get()
+        )
+    }
+
+    viewModel {
+        CartViewModel(
+            getCartUseCase = get()
+        )
     }
 }

@@ -15,11 +15,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.utils.LocalNavController
-import com.example.utils.routeClass
-import kotlinx.collections.immutable.ImmutableList
+import com.example.utils.navigation.routeClass
 
 @Composable
 fun BottomNavBar(
