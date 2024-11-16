@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">market-app</string>
+    <string name="view_all">View ALL</string>
+    <string name="title_featured">Featured</string>
+    <string name="title_popular">Most Popular</string>
+    <string name="title_tab_home">Home</string>
+    <string name="title_tab_basket">Favourites</string>
+    <string name="title_tab_profile">Profile</string>
+
+    <string name="core_common_session_expired">Session has been expired</string>
+    <string name="core_common_error_connection">No internet connection</string>
+    <string name="core_common_error_service">Remote service error</string>
+    <string name="core_common_error_storage">Local storage error</string>
+    <string name="core_common_error_timeout">Operation timeout</string>
+    <string name="core_common_error_title">Error</string>
+    <string name="core_common_error_message">Unknown internal error.</string>
+    <string name="core_common_action_ok">OK</string>
+</resources>

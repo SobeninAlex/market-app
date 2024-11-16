@@ -17,6 +17,7 @@ navigationCompose = "2.8.3"
 kotlinxSerialization = "1.7.1"
 coilComposeVersion = "2.6.0"
 kotlinxImmutableCollections = "0.3.7"
+jetbrainsKotlinJvm = "2.0.0"
 
 #---------------------------------------------------------------------------------------------------
 
@@ -65,4 +66,5 @@ kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "ko
 android-library = { id = "com.android.library", version.ref = "agp" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
 

@@ -1,7 +1,7 @@
 package com.example.data.dto.response
 
 import com.example.data.dto.ProductDto
-import com.example.domain.entity.ProductList
+import com.example.utils.domain.ProductList
 import kotlinx.serialization.Serializable
 
 @Serializable

@@ -20,7 +20,13 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "market-app"
-include(":presentation")
+include(":app")
 include(":data")
-include(":domain")
-include(":utils")
+include(":core:common")
+include(":core:resources")
+include(":core:utils")
+include(":features:cart")
+include(":features:home")
+include(":features:profile")
+include(":features:details")
+include(":navigation")

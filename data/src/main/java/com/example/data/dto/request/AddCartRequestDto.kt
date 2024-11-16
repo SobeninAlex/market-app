@@ -1,6 +1,6 @@
 package com.example.data.dto.request
 
-import com.example.domain.entity.request.AddCartRequest
+import com.example.utils.domain.request.AddCartRequest
 import kotlinx.serialization.Serializable
 
 @Serializable

@@ -1,7 +1,7 @@
 package com.example.data.dto.response
 
 import com.example.data.dto.CategoryDto
-import com.example.domain.entity.CategoryList
+import com.example.utils.domain.CategoryList
 import kotlinx.serialization.Serializable
 
 @Serializable
