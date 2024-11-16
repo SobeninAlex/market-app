@@ -1,5 +1,9 @@
 package com.example.utils.presentation.compose
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,6 +23,7 @@ fun PullRefreshLayout(
     modifier: Modifier = Modifier,
     isRefreshing: Boolean,
     onRefresh: () -> Unit,
+    refreshContent: @Composable BoxScope.() -> Unit,
     content: @Composable BoxScope.() -> Unit
 ) {
     val pullRefreshState = rememberPullRefreshState(isRefreshing, onRefresh)
@@ -28,8 +33,24 @@ fun PullRefreshLayout(
             .fillMaxSize()
             .pullRefresh(pullRefreshState)
     ) {
-        Box {
-            content()
+        AnimatedVisibility(
+            visible = !isRefreshing,
+            enter = fadeIn(tween(500)),
+            exit = fadeOut(tween(500))
+        ) {
+            Box {
+                content()
+            }
+        }
+
+        AnimatedVisibility(
+            visible = isRefreshing,
+            enter = fadeIn(tween(500)),
+            exit = fadeOut(tween(500))
+        ) {
+            Box {
+                refreshContent()
+            }
         }
 
         PullRefreshIndicator(

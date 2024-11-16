@@ -5,6 +5,7 @@ import com.example.resources.R
 import com.example.cart.domain.CartRepository
 import com.example.utils.helper.ResultWrapper
 import com.example.utils.presentation.BaseViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -35,6 +36,7 @@ class CartViewModel(
     private fun getCart(loading: Boolean? = null) {
         viewModelScope.launch {
             loading?.let { _uiState.update { state -> state.copy(loading = true) } }
+            delay(5000)
             runCatching { cartRepository.getCart() }
                 .onSuccess { result ->
                     when (result) {
