@@ -28,6 +28,33 @@ import com.example.resources.BlackColor
 /**
  * enableEdgeToEdge
  */
+fun Context.setupSystemBarStyle(
+    statusBarColor: Color,
+    navigationBarColor: Color,
+    isLightIconsStatusBar: Boolean,
+) = with(this as ComponentActivity) {
+    val statusBarStyle = if (!isLightIconsStatusBar) {
+        SystemBarStyle.dark(statusBarColor.toArgb())
+    } else {
+        SystemBarStyle.light(statusBarColor.toArgb(), BlackColor.toArgb())
+    }
+
+    val navigationBarStyle = when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+        Configuration.UI_MODE_NIGHT_YES -> {
+            SystemBarStyle.dark(navigationBarColor.toArgb())
+        }
+        else -> {
+            SystemBarStyle.light(navigationBarColor.toArgb(), BlackColor.toArgb())
+        }
+
+    }
+
+    enableEdgeToEdge(
+        statusBarStyle = statusBarStyle,
+        navigationBarStyle = navigationBarStyle
+    )
+}
+
 fun Context.setupSystemBarStyleDefault(
     statusBarColor: Color? = null,
     navigationBarColor: Color? = null

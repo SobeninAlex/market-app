@@ -4,7 +4,7 @@
     <string name="title_featured">Featured</string>
     <string name="title_popular">Most Popular</string>
     <string name="title_tab_home">Home</string>
-    <string name="title_tab_basket">Favourites</string>
+    <string name="title_tab_cart">Cart</string>
     <string name="title_tab_profile">Profile</string>
 
     <string name="core_common_session_expired">Session has been expired</string>

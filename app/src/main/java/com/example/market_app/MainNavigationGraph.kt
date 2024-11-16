@@ -31,6 +31,7 @@ import com.example.home.presentation.HomeScreen
 import com.example.navigation.BasketGraph
 import com.example.navigation.BottomNavBar
 import com.example.navigation.HomeGraph
+import com.example.navigation.LocalNavController
 import com.example.navigation.ProfileGraph
 import com.example.profile.presentation.ProfileScreen
 import com.example.utils.event.ObserveAsEvent
@@ -90,7 +91,7 @@ fun MainNavigationGraph() {
         }
     ) {
         CompositionLocalProvider(
-            com.example.navigation.LocalNavController provides navController
+            LocalNavController provides navController
         ) {
             NavHost(
                 navController = navController,

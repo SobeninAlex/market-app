@@ -1,11 +1,15 @@
 package com.example.home.presentation
 
+import android.widget.Space
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -21,6 +25,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -41,7 +46,9 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun HomeScreen() {
     val context = LocalContext.current
-    context.setupSystemBarStyleDefault()
+    context.setupSystemBarStyleDefault(
+        statusBarColor = Color.Transparent
+    )
 
     val navController = LocalNavController.current
 
@@ -109,13 +116,17 @@ private fun HomeScreenContent(
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background
     ) { paddingValues ->
+        val bottomScaffold = paddingValues.calculateBottomPadding()
+        val topScaffold = paddingValues.calculateTopPadding()
+
         LazyColumn(
-            modifier = Modifier.padding(paddingValues),
+            modifier = Modifier.padding(bottom = bottomScaffold),
             contentPadding = PaddingValues(all = 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
 
             item {
+                Spacer(modifier = Modifier.height(topScaffold))
                 ProfileHeader()
             }
 

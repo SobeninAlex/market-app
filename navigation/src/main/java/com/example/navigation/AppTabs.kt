@@ -18,7 +18,7 @@ val MainTabs = persistentListOf(
     ),
     AppTab(
         icon = R.drawable.ic_basket,
-        labelRes = R.string.title_tab_basket,
+        labelRes = R.string.title_tab_cart,
         graph = BasketGraph
     ),
     AppTab(

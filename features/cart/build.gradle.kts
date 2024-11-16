@@ -42,6 +42,7 @@ dependencies {
 
     implementation(project(":core:resources"))
     implementation(project(":core:utils"))
+    implementation(project(":core:common"))
     implementation(project(":navigation"))
 
     implementation(libs.koin.core)
