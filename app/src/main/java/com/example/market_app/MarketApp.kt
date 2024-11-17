@@ -9,12 +9,13 @@ import com.example.market_app.glue.feature.cart.featureCartModule
 import com.example.market_app.glue.feature.detail.featureDetailModule
 import com.example.market_app.glue.feature.home.featureHomeModule
 import com.example.market_app.glue.feature.profile.featureProfileModule
-import org.koin.android.ext.android.get
-import org.koin.android.ext.android.getKoin
+import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
 class MarketApp : Application() {
+
+    private val coreProvider by inject<CoreProvider>()
 
     override fun onCreate() {
         super.onCreate()
@@ -32,7 +33,7 @@ class MarketApp : Application() {
             )
         }
 
-        Core.init(coreProvider = get())
+        Core.init(coreProvider = coreProvider)
     }
 
 }

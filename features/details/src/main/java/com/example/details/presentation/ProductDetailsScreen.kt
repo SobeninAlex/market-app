@@ -74,9 +74,10 @@ fun ProductDetailsScreen(
     )
 
     val navController = com.example.navigation.LocalNavController.current
-    val viewModel = koinViewModel<ProductDetailsViewModel>()
-    val rememberScreenRoute = remember { navController.currentBackStackEntry.routeClass() }
 
+    val viewModel = koinViewModel<ProductDetailsViewModel>()
+
+    val rememberScreenRoute = remember { navController.currentBackStackEntry.routeClass() }
     EventConsumer(viewModel.exitChanel) {
         //наверное эту проверку можно и не делать...
         if (rememberScreenRoute == navController.currentBackStackEntry.routeClass()) {

@@ -1,22 +1,18 @@
 package com.example.cart.presentation
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.cart.CartEvent
 import com.example.cart.presentation.components.CartListContent
@@ -25,7 +21,6 @@ import com.example.navigation.LocalNavController
 import com.example.resources.MainColor
 import com.example.resources.R
 import com.example.resources.WhiteColor
-import com.example.utils.domain.Cart
 import com.example.utils.presentation.compose.BlankScreen
 import com.example.utils.presentation.compose.LoadingBox
 import com.example.utils.presentation.compose.PullRefreshLayout
@@ -56,7 +51,10 @@ private fun CartScreenContent(
     event: (CartEvent) -> Unit,
     uiState: CartScreenUiState
 ) {
+    val navController = LocalNavController.current
+
     Scaffold(
+        modifier = Modifier.padding(bottom = 50.dp),
         containerColor = MaterialTheme.colorScheme.background,
         topBar = {
             SimpleTopBar(
@@ -70,7 +68,7 @@ private fun CartScreenContent(
             isLoading = uiState.loading,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues),
+                .padding(paddingValues)
         ) {
             PullRefreshLayout(
                 isRefreshing = uiState.refresh,
@@ -85,14 +83,12 @@ private fun CartScreenContent(
                         title = stringResource(R.string.empty_list_title)
                     )
                 } else {
-                    LazyColumn(
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-
-                    }
-//                    CartListContent(
-//                        carts = uiState.carts
-//                    )
+                    CartListContent(
+                        carts = uiState.carts,
+                        onCartClick = {
+                            /*todo*/
+                        }
+                    )
                 }
             }
         }

@@ -36,7 +36,7 @@ class CartViewModel(
     private fun getCart(loading: Boolean? = null) {
         viewModelScope.launch {
             loading?.let { _uiState.update { state -> state.copy(loading = true) } }
-            delay(5000)
+            delay(2500) //todo: test
             runCatching { cartRepository.getCart() }
                 .onSuccess { result ->
                     when (result) {
