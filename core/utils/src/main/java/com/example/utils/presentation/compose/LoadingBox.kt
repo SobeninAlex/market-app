@@ -34,6 +34,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.transition.Visibility
 import com.example.resources.AccentColor
 import kotlinx.coroutines.delay
 
@@ -82,20 +83,28 @@ fun LoadingBox(
 }
 
 @Composable
-fun CircularLoadingIndicator(
+fun BoxScope.CircularLoadingIndicator(
     modifier: Modifier = Modifier,
+    visibility: Boolean,
     color: Color = AccentColor,
     strokeWidth: Dp = ProgressIndicatorDefaults.StrokeWidth,
     backgroundColor: Color = Color.Transparent,
     strokeCap: StrokeCap = StrokeCap.Square,
 ) {
-    CircularProgressIndicator(
+
+    AnimatedVisibility(
         modifier = modifier,
-        color = color,
-        strokeWidth = strokeWidth,
-        backgroundColor = backgroundColor,
-        strokeCap = strokeCap
-    )
+        visible = visibility,
+        enter = fadeIn(tween(500)),
+        exit = fadeOut(tween(500))
+    ) {
+        CircularProgressIndicator(
+            color = color,
+            strokeWidth = strokeWidth,
+            backgroundColor = backgroundColor,
+            strokeCap = strokeCap
+        )
+    }
 }
 
 @Composable

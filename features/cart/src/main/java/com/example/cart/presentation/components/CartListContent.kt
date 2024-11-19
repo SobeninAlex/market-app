@@ -26,7 +26,10 @@ import com.example.utils.domain.Cart
 @Composable
 fun BoxScope.CartListContent(
     carts: List<Cart>,
-    onCartClick: (Cart) -> Unit
+    onCartClick: (Cart) -> Unit,
+    onPlusClick: (Cart) -> Unit,
+    onMinusClick: (Cart) -> Unit,
+    onRemoveClick: (Cart) -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -39,7 +42,10 @@ fun BoxScope.CartListContent(
         ) { cart ->
             CartItem(
                 cart = cart,
-                onCartClick = onCartClick
+                onCartClick = onCartClick,
+                onMinusClick = { onMinusClick(cart) },
+                onPlusClick = { onPlusClick(cart) },
+                onRemoveClick = { onRemoveClick(cart) }
             )
         }
 

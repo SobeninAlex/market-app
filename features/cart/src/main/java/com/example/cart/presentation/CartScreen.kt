@@ -85,9 +85,10 @@ private fun CartScreenContent(
                 } else {
                     CartListContent(
                         carts = uiState.carts,
-                        onCartClick = {
-                            /*todo*/
-                        }
+                        onCartClick = {/*todo*/ },
+                        onPlusClick = { event(CartEvent.OnPlusClick(it)) },
+                        onMinusClick = { event(CartEvent.OnMinusClick(it)) },
+                        onRemoveClick = { event(CartEvent.OnRemoveClick(it)) }
                     )
                 }
             }

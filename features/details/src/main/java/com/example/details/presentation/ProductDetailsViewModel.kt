@@ -32,7 +32,7 @@ class ProductDetailsViewModel(
         viewModelScope.launch {
             _state.value = ProductDetailsScreenUiState.Loading("Adding to cart...")
             runCatching {
-                detailRepository.addProductToCart(product.toAddCartRequest(quantity, 1))
+                detailRepository.addProductToCart(product.toAddCartRequest(quantity))
             }.onSuccess { result ->
                 when (result) {
                     is ResultWrapper.Failure -> {

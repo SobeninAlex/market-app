@@ -1,7 +1,11 @@
 package com.example.cart.presentation
 
+import androidx.compose.runtime.Immutable
 import com.example.utils.domain.Cart
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
+@Immutable
 data class CartScreenUiState(
     val loading: Boolean,
     val refresh: Boolean,
@@ -12,18 +16,16 @@ data class CartScreenUiState(
         val DEFAULT = CartScreenUiState(
             loading = false,
             refresh = false,
-            carts = emptyList()
+            carts = persistentListOf()
         )
 
         val FAKE = CartScreenUiState(
             loading = false,
             refresh = false,
-            carts = listOf(
+            carts = persistentListOf(
                 Cart(
                     id = 681,
                     productId = 9,
-                    userId = 1,
-                    name = "Ray-Ban Aviator Sunglasses",
                     price = 150.0,
                     imageUrl = "https://robbreport.com/wp-content/uploads/2022/07/tomcruiseaviators.jpg?w=1000",
                     quantity = 1,
@@ -32,8 +34,6 @@ data class CartScreenUiState(
                 Cart(
                     id = 681,
                     productId = 9,
-                    userId = 1,
-                    name = "Ray-Ban Aviator Sunglasses",
                     price = 150.0,
                     imageUrl = "https://robbreport.com/wp-content/uploads/2022/07/tomcruiseaviators.jpg?w=1000",
                     quantity = 1,

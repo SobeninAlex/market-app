@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -16,10 +15,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.materialIcon
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,28 +25,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.resources.GrayColor10
 import com.example.resources.MainColor
-import com.example.resources.R
-import com.example.resources.WhiteColor
 import com.example.resources.roundedCornerShape16
 import com.example.resources.roundedCornerShape4
-import com.example.resources.t2_Bold18
 import com.example.resources.t3_Bold16
 import com.example.utils.domain.Cart
+import com.example.utils.presentation.compose.CircularLoadingIndicator
 import com.example.utils.presentation.compose.ClickableRoundedColumn
-import com.example.utils.presentation.compose.RoundedColumn
+import com.example.utils.presentation.compose.Counter
+import com.example.utils.presentation.compose.CounterShimmer
+import com.example.utils.presentation.noRippleClickable
 import com.example.utils.presentation.shimmerEffect
 
 @Composable
 fun CartItem(
     cart: Cart,
-    onCartClick: (Cart) -> Unit
+    onCartClick: (Cart) -> Unit,
+    onPlusClick: () -> Unit,
+    onMinusClick: () -> Unit,
+    onRemoveClick: () -> Unit
 ) {
     ClickableRoundedColumn(
         modifier = Modifier
@@ -118,67 +116,25 @@ fun CartItem(
                     modifier = Modifier
                         .align(Alignment.TopEnd)
                         .clip(CircleShape)
-                        .clickable { },
+                        .noRippleClickable { onRemoveClick() },
                     imageVector = Icons.Outlined.Delete,
                     contentDescription = null,
                     tint = Color.Red
                 )
 
+                CircularLoadingIndicator(
+                    modifier = Modifier.align(Alignment.BottomEnd).size(28.dp),
+                    visibility = cart.changeQuantityProcess
+                )
+
                 Counter(
                     modifier = Modifier.align(Alignment.BottomEnd),
                     value = cart.quantity.toString(),
-                    onMinusClick = {},
-                    onPlusClick = {}
+                    onMinusClick = onMinusClick,
+                    onPlusClick = onPlusClick,
+                    visibility = !cart.changeQuantityProcess
                 )
             }
-        }
-    }
-}
-
-@Composable
-fun BoxScope.Counter(
-    modifier: Modifier = Modifier,
-    value: String,
-    onMinusClick: () -> Unit,
-    onPlusClick: () -> Unit
-) {
-    Row(
-        modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        IconButton(
-            modifier = Modifier
-                .clip(CircleShape)
-                .background(color = MainColor)
-                .size(28.dp),
-            onClick = onMinusClick
-        ) {
-            Icon(
-                painter = painterResource(R.drawable.ic_minus),
-                contentDescription = null,
-                tint = WhiteColor
-            )
-        }
-
-        Text(
-            text = value,
-            style = t2_Bold18,
-            color = MaterialTheme.colorScheme.onBackground
-        )
-
-        IconButton(
-            modifier = Modifier
-                .clip(CircleShape)
-                .background(color = MainColor)
-                .size(28.dp),
-            onClick = onPlusClick
-        ) {
-            Icon(
-                painter = painterResource(R.drawable.ic_plus),
-                contentDescription = null,
-                tint = WhiteColor
-            )
         }
     }
 }
@@ -262,46 +218,15 @@ fun CartItemShimmer() {
     }
 }
 
-@Composable
-fun BoxScope.CounterShimmer(
-    modifier: Modifier = Modifier,
-) {
-    Row(
-        modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        Box(
-            modifier = Modifier
-                .clip(CircleShape)
-                .background(color = MaterialTheme.colorScheme.outline)
-                .size(28.dp),
-        )
-
-        Box(
-            modifier = Modifier
-                .height(22.dp)
-                .width(18.dp)
-                .clip(roundedCornerShape4)
-                .fillMaxWidth()
-                .background(color = MaterialTheme.colorScheme.outline)
-        )
-
-        Box(
-            modifier = Modifier
-                .clip(CircleShape)
-                .background(color = MaterialTheme.colorScheme.outline)
-                .size(28.dp),
-        )
-    }
-}
-
 @Preview
 @Composable
 private fun CartItemPreview() {
     CartItem(
         cart = Cart.FAKE,
-        onCartClick = {}
+        onCartClick = {},
+        onMinusClick = {},
+        onPlusClick = {},
+        onRemoveClick = {}
     )
 }
 

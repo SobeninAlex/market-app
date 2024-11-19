@@ -21,4 +21,6 @@ class UserFriendlyException(
     cause: Exception,
 ) : AppException(cause.message ?: "", cause)
 
-class NotFoundException : AppException()
+class NotFoundException(
+    message: String
+) : AppException(message)

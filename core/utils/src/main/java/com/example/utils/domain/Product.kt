@@ -19,12 +19,9 @@ data class Product(
 
     val priceString: String get() = "$$price"
 
-    fun toAddCartRequest(quantity: Int, userId: Int) = AddCartRequest(
+    fun toAddCartRequest(quantity: Int) = AddCartRequest(
         productId = id,
-        productName = title,
-        price = price,
         quantity = quantity,
-        userId = userId
     )
 
     companion object {
