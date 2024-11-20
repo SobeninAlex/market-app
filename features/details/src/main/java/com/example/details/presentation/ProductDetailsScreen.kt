@@ -56,9 +56,8 @@ import com.example.resources.WhiteColor
 import com.example.resources.roundedCornerShape12
 import com.example.resources.roundedCornerShape16
 import com.example.resources.R
-import com.example.utils.domain.Product
+import com.example.domain.Product
 import com.example.utils.event.EventConsumer
-import com.example.navigation.LocalNavController
 import com.example.navigation.routeClass
 import com.example.utils.presentation.compose.LoadingScreenContent
 import com.example.utils.presentation.setupSystemBarStyleDefault
@@ -66,7 +65,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ProductDetailsScreen(
-    product: Product,
+    product: com.example.domain.Product,
 ) {
     val context = LocalContext.current
     context.setupSystemBarStyleDefault(
@@ -114,7 +113,7 @@ fun ProductDetailsScreen(
 
 @Composable
 private fun ProductDetailsScreenContent(
-    product: Product,
+    product: com.example.domain.Product,
     onBackPressed: () -> Unit,
     onFavouriteClick: () -> Unit,
     event: (ProductDetailsEvent) -> Unit
@@ -358,7 +357,7 @@ fun SizeCardItem(
 @Preview(showBackground = true)
 private fun ProductDetailsScreen() {
     ProductDetailsScreenContent(
-        Product.DEFAULT,
+        com.example.domain.Product.DEFAULT,
         onBackPressed = {},
         onFavouriteClick = {},
         event = {})

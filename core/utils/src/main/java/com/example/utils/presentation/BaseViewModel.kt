@@ -1,11 +1,9 @@
 package com.example.utils.presentation
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.common.AndroidLogger
 import com.example.common.AndroidResources
 import com.example.common.Core
-import com.example.common.CoreProvider
 import com.example.utils.event.SnackbarAction
 import com.example.utils.event.SnackbarController
 import com.example.utils.event.SnackbarEvent

@@ -1,6 +1,5 @@
 package com.example.home.presentation
 
-import android.widget.Space
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
@@ -8,7 +7,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -32,9 +30,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.navigation.HomeGraph
-import com.example.utils.domain.Product
 import com.example.utils.presentation.compose.LoadingScreenContent
-import com.example.utils.presentation.compose.ProductsRow
+import com.example.home.presentation.component.ProductsRow
 import com.example.utils.presentation.compose.ProfileHeader
 import com.example.utils.presentation.compose.SearchBar
 import com.example.resources.WhiteColor
@@ -62,10 +59,10 @@ fun HomeScreen() {
         mutableStateOf<String?>(null)
     }
     val featured = remember {
-        mutableStateOf<List<Product>>(emptyList())
+        mutableStateOf<List<com.example.domain.Product>>(emptyList())
     }
     val popularProducts = remember {
-        mutableStateOf<List<Product>>(emptyList())
+        mutableStateOf<List<com.example.domain.Product>>(emptyList())
     }
     val categories = remember {
         mutableStateOf<List<String>>(emptyList())
@@ -106,12 +103,12 @@ fun HomeScreen() {
 
 @Composable
 private fun HomeScreenContent(
-    featured: List<Product>,
-    popularProducts: List<Product>,
+    featured: List<com.example.domain.Product>,
+    popularProducts: List<com.example.domain.Product>,
     categories: List<String>,
     isLoading: Boolean = false,
     errorMsg: String? = null,
-    onProductClick: (Product) -> Unit
+    onProductClick: (com.example.domain.Product) -> Unit
 ) {
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background

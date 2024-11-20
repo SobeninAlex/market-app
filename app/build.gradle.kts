@@ -43,6 +43,7 @@ android {
 dependencies {
     //modules
     implementation(project(":data"))
+    implementation(project(":domain"))
     implementation(project(":navigation"))
     implementation(project(":core:common"))
     implementation(project(":core:resources"))

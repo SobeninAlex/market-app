@@ -1,6 +1,6 @@
 package com.example.data.dto
 
-import com.example.utils.domain.Category
+import com.example.domain.Category
 import kotlinx.serialization.Serializable
 
 @Serializable

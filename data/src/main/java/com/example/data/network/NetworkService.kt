@@ -1,16 +1,15 @@
 package com.example.data.network
 
-import com.example.data.dto.request.AddCartRequestDto
-import com.example.data.dto.request.AddCartRequestDto.Companion.fromAddCartRequest
+import com.example.data.dto.request.AddProductToCartRequest
 import com.example.data.dto.response.CartListResponse
+import com.example.data.dto.response.CartSummaryResponse
 import com.example.data.dto.response.CategoryListResponse
 import com.example.data.dto.response.ProductListResponse
-import com.example.utils.domain.Cart
-import com.example.utils.domain.CartList
-import com.example.utils.domain.CategoryList
-import com.example.utils.domain.ProductList
-import com.example.utils.domain.request.AddCartRequest
-import com.example.utils.helper.ResultWrapper
+import com.example.domain.Cart
+import com.example.domain.Category
+import com.example.domain.Product
+import com.example.domain.Summary
+import com.example.utils.helper.NetworkResultWrapper
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.header
@@ -27,63 +26,85 @@ class NetworkService(
 
     private val baseUrl = "https://ecommerce-ktor-4641e7ff1b63.herokuapp.com/v2"
 
-    suspend fun getProducts(category: Int?): ResultWrapper<ProductList> {
+    suspend fun getProducts(category: Int?): NetworkResultWrapper<List<Product>> {
         val url =
             if (category != null) "$baseUrl/products/category/$category" else "$baseUrl/products"
         return makeWebRequest(
             url = url,
             method = HttpMethod.Get,
             mapper = { products: ProductListResponse ->
-                products.toProductList()
+                products.data.map { it.toProduct() }
             }
         )
     }
 
-    suspend fun getCategories(): ResultWrapper<CategoryList> {
+    suspend fun getCategories(): NetworkResultWrapper<List<Category>> {
         val url = "$baseUrl/categories"
         return makeWebRequest(
             url = url,
             method = HttpMethod.Get,
             mapper = { categories: CategoryListResponse ->
-                categories.toCategoryList()
+                categories.data.map { it.toCategory() }
             }
         )
     }
 
-    suspend fun addProductToCart(request: AddCartRequest): ResultWrapper<CartList> {
+    suspend fun addProductToCart(request: AddProductToCartRequest): NetworkResultWrapper<List<Cart>> {
         val url = "$baseUrl/cart/1"
         return makeWebRequest(
             url = url,
             method = HttpMethod.Post,
-            body = fromAddCartRequest(request),
+            body = request,
             mapper = { cartListResponse: CartListResponse ->
-                cartListResponse.toCartList()
+                cartListResponse.data.map { it.toCart() }
             }
         )
     }
 
-    suspend fun getCart(): ResultWrapper<CartList> {
+    suspend fun getCart(): NetworkResultWrapper<List<Cart>> {
         val url = "$baseUrl/cart/1"
         return makeWebRequest(
             url = url,
             method = HttpMethod.Get,
             mapper = { cartListResponse: CartListResponse ->
-                cartListResponse.toCartList()
+                cartListResponse.data.map { it.toCart() }
             }
         )
     }
 
-    suspend fun updateQuantity(cart: Cart): ResultWrapper<CartList> {
-        val url = "$baseUrl/cart/1/${cart.id}"
+    suspend fun updateQuantity(
+        request: AddProductToCartRequest,
+        cartId: Int
+    ): NetworkResultWrapper<List<Cart>> {
+        val url = "$baseUrl/cart/1/${cartId}"
         return makeWebRequest(
             url = url,
             method = HttpMethod.Put,
-            body = AddCartRequestDto(
-                productId = cart.productId,
-                quantity = cart.quantity,
-            ),
+            body = request,
             mapper = { cartListResponse: CartListResponse ->
-                cartListResponse.toCartList()
+                cartListResponse.data.map { it.toCart() }
+            }
+        )
+    }
+
+    suspend fun removeItem(cartId: Int, userId: Int): NetworkResultWrapper<List<Cart>> {
+        val url = "$baseUrl/cart/$userId/$cartId"
+        return makeWebRequest(
+            url = url,
+            method = HttpMethod.Delete,
+            mapper = { cartListResponse: CartListResponse ->
+                cartListResponse.data.map { it.toCart() }
+            }
+        )
+    }
+
+    suspend fun getCartSummary(userId: Int): NetworkResultWrapper<Summary> {
+        val url = "$baseUrl/checkout/$userId/summary"
+        return makeWebRequest(
+            url = url,
+            method = HttpMethod.Get,
+            mapper = { response: CartSummaryResponse ->
+                response.data.toSummaryData()
             }
         )
     }
@@ -95,7 +116,7 @@ class NetworkService(
         headers: Map<String, String> = emptyMap(),
         parameters: Map<String, String> = emptyMap(),
         noinline mapper: ((I) -> O)? = null
-    ): ResultWrapper<O> {
+    ): NetworkResultWrapper<O> {
         return try {
             val response = client.request(url) {
                 this.method = method
@@ -119,9 +140,9 @@ class NetworkService(
                 contentType(ContentType.Application.Json)
             }.body<I>()
             val result: O = mapper?.invoke(response) ?: response as O
-            ResultWrapper.Success(result)
+            NetworkResultWrapper.Success(result)
         } catch (e: Exception) {
-            ResultWrapper.Failure(e)
+            NetworkResultWrapper.Failure(e)
         }
     }
 

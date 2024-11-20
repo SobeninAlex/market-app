@@ -1,6 +1,6 @@
 package com.example.navigation
 
-import com.example.utils.domain.Product
+import com.example.domain.Product
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -15,10 +15,13 @@ data object HomeGraph {
 }
 
 @Serializable
-data object BasketGraph {
+data object CartGraph {
 
     @Serializable
-    data object BasketRoute
+    data object CartRoute
+
+    @Serializable
+    data object CheckoutRoute
 
 }
 

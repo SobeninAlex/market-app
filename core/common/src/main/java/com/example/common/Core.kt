@@ -19,7 +19,7 @@ object Core {
     //val screenCommunication: ScreenCommunication get() = coreProvider.screenCommunication
 
     fun init(coreProvider: CoreProvider) {
-        this.coreProvider = coreProvider
+        Core.coreProvider = coreProvider
     }
 
 }

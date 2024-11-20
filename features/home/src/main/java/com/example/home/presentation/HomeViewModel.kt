@@ -3,8 +3,7 @@ package com.example.home.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.home.domain.HomeRepository
-import com.example.utils.domain.Product
-import com.example.utils.helper.ResultWrapper
+import com.example.utils.helper.NetworkResultWrapper
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -44,14 +43,14 @@ class HomeViewModel(
         }
     }
 
-    private suspend fun getProducts(category: Int?): List<Product> {
+    private suspend fun getProducts(category: Int?): List<com.example.domain.Product> {
         homeRepository.getProducts(category).let { result ->
             when (result) {
-                is ResultWrapper.Failure -> {
+                is NetworkResultWrapper.Failure -> {
                     return emptyList()
                 }
-                is ResultWrapper.Success -> {
-                    return result.value.products
+                is NetworkResultWrapper.Success -> {
+                    return result.data
                 }
             }
         }
@@ -60,12 +59,12 @@ class HomeViewModel(
     private suspend fun getCategories(): List<String> {
         homeRepository.getCategories().let { result ->
             when (result) {
-                is ResultWrapper.Failure -> {
+                is NetworkResultWrapper.Failure -> {
                     return emptyList()
                 }
 
-                is ResultWrapper.Success -> {
-                    return result.value.categories.map { it.title }
+                is NetworkResultWrapper.Success -> {
+                    return result.data.map { it.title }
                 }
             }
         }
@@ -76,8 +75,8 @@ sealed interface HomeScreenUiState {
     data object Initial : HomeScreenUiState
     data object Loading : HomeScreenUiState
     data class Success(
-        val featured: List<Product>,
-        val popularProducts: List<Product>,
+        val featured: List<com.example.domain.Product>,
+        val popularProducts: List<com.example.domain.Product>,
         val categories: List<String>
     ) : HomeScreenUiState
     data class Failure(val message: String) : HomeScreenUiState

@@ -44,6 +44,7 @@ dependencies {
     implementation(project(":core:utils"))
     implementation(project(":core:common"))
     implementation(project(":navigation"))
+    implementation(project(":domain"))
 
     implementation(libs.koin.core)
     implementation(libs.koin.android)

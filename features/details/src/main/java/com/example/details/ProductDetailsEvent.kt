@@ -1,6 +1,6 @@
 package com.example.details
 
-import com.example.utils.domain.Product
+import com.example.domain.Product
 
 sealed interface ProductDetailsEvent {
 

@@ -7,7 +7,10 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.resources.MainColor
 import com.example.resources.t2_Bold18
 
@@ -44,6 +47,12 @@ fun SimpleTopBar(
             titleContentColor = titleContentColor,
             actionIconContentColor = actionIconContentColor
         ),
-        modifier = modifier
+        modifier = modifier.shadow(elevation = 1.dp)
     )
+}
+
+@Preview
+@Composable
+private fun SimpleTopBarPreview() {
+    SimpleTopBar(title = "Title")
 }

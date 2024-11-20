@@ -1,11 +1,13 @@
 package com.example.details.domain
 
-import com.example.utils.domain.CartList
-import com.example.utils.domain.request.AddCartRequest
-import com.example.utils.helper.ResultWrapper
+import com.example.domain.Cart
+import com.example.utils.helper.NetworkResultWrapper
 
 interface DetailRepository {
 
-    suspend fun addProductToCart(request: AddCartRequest) : ResultWrapper<CartList>
+    suspend fun addProductToCart(
+        productId: Int,
+        quantity: Int,
+    ): NetworkResultWrapper<List<Cart>>
 
 }
