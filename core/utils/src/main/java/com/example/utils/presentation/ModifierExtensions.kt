@@ -17,6 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.IntSize
 import com.example.resources.GrayColor20
@@ -52,7 +53,14 @@ fun Modifier.clickableOnce(onClick: () -> Unit): Modifier = composed(
     }
 }
 
-fun Modifier.shimmerEffect(isEnabled: Boolean = true): Modifier = composed {
+/**
+ * если накладываешь эфект на компонент, то компоненту НЕ надо задавать background
+ */
+fun Modifier.shimmerEffect(
+    isEnabled: Boolean = true,
+    first: Color = WhiteColor,
+    second: Color = GrayColor20,
+): Modifier = composed {
     if (!isEnabled) return@composed Modifier
 
     var size by remember { mutableStateOf(IntSize.Zero) }
@@ -72,9 +80,9 @@ fun Modifier.shimmerEffect(isEnabled: Boolean = true): Modifier = composed {
     background(
         brush = Brush.horizontalGradient(
             colors = listOf(
-                MaterialTheme.colorScheme.primaryContainer,
-                MaterialTheme.colorScheme.outline,
-                MaterialTheme.colorScheme.primaryContainer
+                first,
+                second,
+                first
             ),
             startX = startOffsetX,
             endX = startOffsetX + size.width.toFloat()
