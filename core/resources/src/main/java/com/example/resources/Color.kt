@@ -23,5 +23,6 @@ val LightGrayColor30 = Color.LightGray.copy(alpha = 0.3f)
 val LightGrayColor50 = Color.LightGray.copy(alpha = 0.5f)
 val GrayColor50 = Color.Gray.copy(alpha = 0.5f)
 val StarColor = Color(0xFFF5B80D)
+val GrayColor = Color.Gray
 val GrayColor20 = Color(0xFFE1E4E8)
 val GrayColor10 = Color(0xFFEDEFF0)

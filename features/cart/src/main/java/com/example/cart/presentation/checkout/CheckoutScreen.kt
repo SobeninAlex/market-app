@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.cart.presentation.component.orderSummaryBlock
@@ -27,6 +28,7 @@ import com.example.resources.R
 import com.example.resources.WhiteColor
 import com.example.resources.roundedCornerShape12
 import com.example.resources.t3_Bold16
+import com.example.utils.presentation.compose.ApplyButton
 import com.example.utils.presentation.compose.LoadingBox
 import com.example.utils.presentation.compose.PullRefreshLayout
 import com.example.utils.presentation.compose.SimpleTopBar
@@ -85,24 +87,21 @@ private fun CheckoutScreenContent(
                     )
                 }
 
-                Button(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.BottomCenter)
-                        .padding(16.dp),
-                    shape = roundedCornerShape12,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MainColor,
-                        contentColor = WhiteColor
-                    ),
-                    onClick = {  }
-                ) {
-                    Text(
-                        text = "Confirm Order",
-                        style = t3_Bold16
-                    )
-                }
+                ApplyButton(
+                    modifier = Modifier.align(Alignment.BottomCenter),
+                    onClick = {},
+                    text = "confirm order",
+                )
             }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun CheckoutScreenContentPreview() {
+    CheckoutScreenContent(
+        uiState = CheckoutUiState.FAKE,
+        event = {}
+    )
 }

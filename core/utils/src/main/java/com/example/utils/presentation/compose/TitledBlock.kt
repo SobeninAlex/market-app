@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.resources.roundedCornerShape12
 import com.example.resources.roundedCornerShape20
+import com.example.resources.t2_Bold18
 import com.example.resources.t3_Bold16
 
 @Preview
@@ -53,8 +54,9 @@ fun TitledBlock(
         verticalArrangement = verticalArrangement,
         horizontalAlignment = horizontalAlignment
     ) {
-        Title(
+        Text(
             text = title,
+            style = t2_Bold18,
         )
         content()
     }
