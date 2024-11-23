@@ -55,11 +55,15 @@ fun Modifier.clickableOnce(onClick: () -> Unit): Modifier = composed(
 
 /**
  * если накладываешь эфект на компонент, то компоненту НЕ надо задавать background
+ * если эффект наложен на контейнер в котором находятся эелемнты то:
+ * //first = MaterialTheme.colorScheme.primaryContainer,
+ * //second = MaterialTheme.colorScheme.outline,
+ * если эффект наложен на сами элементы в контейнере то наоборот
  */
 fun Modifier.shimmerEffect(
     isEnabled: Boolean = true,
-    first: Color = WhiteColor,
-    second: Color = GrayColor20,
+    first: Color, //first = MaterialTheme.colorScheme.primaryContainer,
+    second: Color, //second = MaterialTheme.colorScheme.outline,
 ): Modifier = composed {
     if (!isEnabled) return@composed Modifier
 

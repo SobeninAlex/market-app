@@ -173,7 +173,10 @@ fun CartItemShimmer() {
     Box(
         modifier = Modifier
             .clip(roundedCornerShape16)
-            .shimmerEffect()
+            .shimmerEffect(
+                first = MaterialTheme.colorScheme.primaryContainer,
+                second = MaterialTheme.colorScheme.outline,
+            )
             .height(110.dp)
             .fillMaxWidth()
             .padding(8.dp)

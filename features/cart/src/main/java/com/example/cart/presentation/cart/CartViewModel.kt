@@ -7,6 +7,8 @@ import com.example.utils.helper.NetworkResultWrapper
 import com.example.utils.presentation.BaseViewModel
 import com.example.utils.presentation.mergeWith
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
@@ -24,7 +26,6 @@ class CartViewModel(
     private var loader: Boolean? = null
 
     private val _uiState = MutableStateFlow(CartUiState.DEFAULT)
-
     private val cartFlow = cartRepository.cart
         .map { result ->
             when (result) {
@@ -98,9 +99,7 @@ class CartViewModel(
 
     private fun getCart() {
         viewModelScope.launch {
-            cartFlow
-                .stateIn(viewModelScope)
-                .collect()
+            cartFlow.collect()
         }
     }
 
