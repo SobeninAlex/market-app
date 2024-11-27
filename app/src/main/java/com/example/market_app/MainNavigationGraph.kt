@@ -2,10 +2,7 @@ package com.example.market_app
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedContentTransitionScope
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -13,7 +10,6 @@ import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
-import androidx.compose.material3.SnackbarVisuals
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -41,6 +37,7 @@ import com.example.utils.event.ObserveAsEvent
 import com.example.utils.event.SnackbarController
 import com.example.navigation.asType
 import com.example.navigation.routeClass
+import com.example.utils.event.ExitController
 import kotlinx.coroutines.launch
 import kotlin.reflect.typeOf
 
@@ -49,6 +46,8 @@ import kotlin.reflect.typeOf
 fun MainNavigationGraph() {
     val navController = rememberNavController()
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
+    val coroutineScope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
 
     val showBottomBar = when (currentBackStackEntry.routeClass()) {
         HomeGraph.ProductDetailsRoute::class,
@@ -56,10 +55,8 @@ fun MainNavigationGraph() {
         else -> true
     }
 
-    val coroutineScope = rememberCoroutineScope()
-    val snackbarHostState = remember { SnackbarHostState() }
     ObserveAsEvent(
-        flow = SnackbarController.events,
+        flow = SnackbarController.event,
         key1 = snackbarHostState
     ) { event ->
         coroutineScope.launch {
@@ -76,6 +73,8 @@ fun MainNavigationGraph() {
             }
         }
     }
+
+    ObserveAsEvent(flow = ExitController.event) { navController.popBackStack() }
 
     Scaffold(
         snackbarHost = {

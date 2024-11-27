@@ -31,7 +31,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -51,14 +50,11 @@ import com.example.resources.BlackColor
 import com.example.resources.GrayColor50
 import com.example.resources.LightGrayColor30
 import com.example.resources.LightGrayColor50
+import com.example.resources.R
 import com.example.resources.StarColor
 import com.example.resources.WhiteColor
 import com.example.resources.roundedCornerShape12
 import com.example.resources.roundedCornerShape16
-import com.example.resources.R
-import com.example.domain.Product
-import com.example.utils.event.EventConsumer
-import com.example.navigation.routeClass
 import com.example.utils.presentation.compose.LoadingScreenContent
 import com.example.utils.presentation.setupSystemBarStyleDefault
 import org.koin.androidx.compose.koinViewModel
@@ -75,14 +71,6 @@ fun ProductDetailsScreen(
     val navController = com.example.navigation.LocalNavController.current
 
     val viewModel = koinViewModel<ProductDetailsViewModel>()
-
-    val rememberScreenRoute = remember { navController.currentBackStackEntry.routeClass() }
-    EventConsumer(viewModel.exitChanel) {
-        //наверное эту проверку можно и не делать...
-        if (rememberScreenRoute == navController.currentBackStackEntry.routeClass()) {
-            navController.popBackStack()
-        }
-    }
 
     Box(modifier = Modifier.fillMaxSize()) {
         val uiState = viewModel.state.collectAsStateWithLifecycle()

@@ -14,12 +14,10 @@ data class SnackbarAction(
 )
 
 object SnackbarController {
-
-    private val _events = Channel<SnackbarEvent>()
-    val events = _events.receiveAsFlow()
+    private val _event = Channel<SnackbarEvent>()
+    val event = _event.receiveAsFlow()
 
     suspend fun sendEvent(event: SnackbarEvent) {
-        _events.send(event)
+        _event.send(event)
     }
-
 }

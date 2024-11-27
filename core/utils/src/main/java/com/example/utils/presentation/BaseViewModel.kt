@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.example.common.AndroidLogger
 import com.example.common.AndroidResources
 import com.example.common.Core
+import com.example.utils.event.ExitController
 import com.example.utils.event.SnackbarAction
 import com.example.utils.event.SnackbarController
 import com.example.utils.event.SnackbarEvent
@@ -12,14 +13,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.launch
 
 open class BaseViewModel : ViewModel() {
-
-    private val _exitChanel = Channel<Unit>()
-    val exitChanel: ReceiveChannel<Unit> = _exitChanel
 
     protected fun showSnackbar(
         message: String,
@@ -35,6 +31,12 @@ open class BaseViewModel : ViewModel() {
         }
     }
 
+    protected fun goBack() {
+        viewModelScope.launch {
+            ExitController.sendEvent()
+        }
+    }
+
     protected val viewModelScope: CoroutineScope by lazy {
         val errorHandler = CoroutineExceptionHandler { _, exception ->
             Core.errorHandler.handleError(exception)
@@ -45,10 +47,6 @@ open class BaseViewModel : ViewModel() {
     protected val resources: AndroidResources get() = Core.resources
 
     protected val logger: AndroidLogger get() = Core.logger
-
-    protected suspend fun goBack() {
-        _exitChanel.send(Unit)
-    }
 
     override fun onCleared() {
         super.onCleared()
