@@ -42,7 +42,7 @@ import kotlinx.coroutines.delay
 fun LoadingBox(
     isLoading: Boolean,
     modifier: Modifier = Modifier,
-    animationMillis: Long = 0, // минимальное время проигрывания анимации загрузки перед показом контента
+    animationMillis: Long = 0, //минимальное время проигрывания анимации загрузки перед показом контента
     loadingIndicator: @Composable () -> Unit = {
         Column(
             modifier = Modifier.fillMaxSize(),

@@ -48,8 +48,8 @@ import com.example.utils.presentation.shimmerEffect
 @Composable
 fun CartItem(
     modifier: Modifier = Modifier,
-    cart: com.example.domain.Cart,
-    onCartClick: (com.example.domain.Cart) -> Unit,
+    cart: Cart,
+    onCartClick: (Cart) -> Unit,
     onPlusClick: () -> Unit,
     onMinusClick: () -> Unit,
     onRemoveClick: () -> Unit
@@ -254,7 +254,7 @@ fun CartItemShimmer() {
 @Composable
 private fun CartItemPreview() {
     CartItem(
-        cart = com.example.domain.Cart.FAKE,
+        cart = Cart.FAKE,
         onCartClick = {},
         onMinusClick = {},
         onPlusClick = {},

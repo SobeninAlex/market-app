@@ -1,5 +1,6 @@
 package com.example.cart.presentation.checkout
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,6 +30,7 @@ import com.example.resources.WhiteColor
 import com.example.resources.roundedCornerShape12
 import com.example.resources.t3_Bold16
 import com.example.utils.presentation.compose.ApplyButton
+import com.example.utils.presentation.compose.CircularLoadingIndicator
 import com.example.utils.presentation.compose.LoadingBox
 import com.example.utils.presentation.compose.PullRefreshLayout
 import com.example.utils.presentation.compose.SimpleTopBar
@@ -76,7 +78,9 @@ private fun CheckoutScreenContent(
             PullRefreshLayout(
                 isRefreshing = uiState.refresh,
                 onRefresh = { event(CheckoutEvent.Refresh) },
-                refreshContent = {}
+                refreshContent = {
+                    //todo: shimmer
+                }
             ) {
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
