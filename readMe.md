@@ -9,6 +9,7 @@
 - navigation compose
 - kotlin flow
 - kotlin coroutines
+- kotlinx.Serialization
 
 ### architecture
 <img alt="architecture.png" height="700" src=".preview/architecture.png"/>
